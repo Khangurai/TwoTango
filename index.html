@@ -3,145 +3,256 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TwoTango - Couple Tracker</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Leaflet CSS -->
+    <title>TwoTango</title>
+    <!-- Bootstrap 5 CSS -->
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css" />
+    <!-- custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body class="bg-pink-100 p-4">
-    <div class="container mx-auto max-w-3xl bg-white p-6 rounded-lg shadow-md">
-      <h1 class="text-3xl font-bold text-center text-pink-600 mb-6">
-        TwoTango
-      </h1>
-      <div class="flex justify-center mb-6">
-        <button
-          id="expense-tab"
-          class="px-4 py-2 mx-2 rounded-md bg-pink-400 text-white font-medium active-tab hover:bg-pink-700""
-          onclick="showSection('expense')"
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a
+          class="navbar-brand d-flex align-items-center"
+          href="#"
+          data-target="home"
         >
-          Expenses
-        </button>
+          <span class="material-icons" style="color: var(--rose-500)"
+            >&#10084;</span
+          >
+          TwoTango
+        </a>
         <button
-          id="map-tab"
-          class="px-4 py-2 mx-2 rounded-md bg-pink-400 text-white font-medium hover:bg-pink-700""
-          onclick="showSection('map')"
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
-          Map
+          <span class="navbar-toggler-icon"></span>
         </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-target="home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-target="features">Features</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-target="expense">Expenses</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-target="map">Map</a>
+            </li>
+          </ul>
+          <a class="btn btn-outline-dark" href="#">Login</a>
+        </div>
       </div>
+    </nav>
 
-      <!-- Expense Tracker Section -->
-      <div id="expense-section" class="section">
-        <h2 class="text-xl font-semibold text-pink-600 mb-4">
-          Expense Tracker
-        </h2>
-        <form
-          id="expense-form"
-          class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4"
+    <!-- Sections -->
+    <section id="home" class="content-section">
+      <div class="text-center py-5">
+        <h1
+          id="title"
+          class="text-rose-600"
+          style="font-weight: bold; font-size: 400"
         >
-          <input
-            type="text"
-            id="expense-desc"
-            class="col-span-1 md:col-span-2 p-2 border border-gray-300 rounded-md"
-            placeholder="Description"
-            required
-          />
-          <input
-            type="number"
-            id="expense-amount"
-            class="col-span-1 p-2 border border-gray-300 rounded-md"
-            placeholder="Amount"
-            step="0.01"
-            required
-          />
-          <input
-            type="date"
-            id="expense-date"
-            class="col-span-1 p-2 border border-gray-300 rounded-md"
-            required
-          />
-          <select
-            id="expense-category"
-            class="col-span-1 p-2 border border-gray-300 rounded-md"
-          >
-            <option value="Food">Food</option>
-            <option value="Travel">Travel</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Other">Other</option>
-          </select>
-          <button
-            type="submit"
-            class="col-span-1 md:col-span-1 bg-pink-600 text-white p-2 rounded-md hover:bg-pink-700"
-          >
-            Add
-          </button>
-        </form>
-        <ul id="expense-list" class="space-y-2 mb-4"></ul>
-        <p class="font-bold text-pink-600">
-          Total: $<span id="expense-total">0.00</span>
+          TwoTango
+        </h1>
+        <p class="text-gray-600">
+          Track shared expenses and memorable places together. Because every
+          love story deserves to be organized beautifully.
         </p>
-      </div>
-
-      <!-- Map Tracker Section -->
-      <div id="map-section" class="section hidden">
-        <h2 class="text-xl font-semibold text-pink-600 mb-4">Map Tracker</h2>
-        <form
-          id="place-form"
-          class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-4"
-        >
-          <input
-            type="text"
-            id="place-name"
-            class="col-span-1 md:col-span-2 p-2 border border-gray-300 rounded-md"
-            placeholder="Place Name"
-            required
-          />
-          <input
-            type="text"
-            id="place-note"
-            class="col-span-1 md:col-span-2 p-2 border border-gray-300 rounded-md"
-            placeholder="Note"
-            required
-          />
-          <input
-            type="number"
-            id="place-lat"
-            class="col-span-1 p-2 border border-gray-300 rounded-md"
-            placeholder="Latitude"
-            step="any"
-            required
-          />
-          <input
-            type="number"
-            id="place-lng"
-            class="col-span-1 p-2 border border-gray-300 rounded-md"
-            placeholder="Longitude"
-            step="any"
-            required
-          />
-          <button
-            type="submit"
-            class="col-span-1 md:col-span-1 bg-pink-600 text-white p-2 rounded-md hover:bg-pink-700"
+        <div class="d-flex justify-content-center gap-3 mt-4">
+          <a href="#" class="btn btn-primary" data-target="expense"
+            >Track Expenses</a
           >
-            Add
-          </button>
-        </form>
-        <div id="map" class="h-96 mb-4"></div>
-        <ul id="place-list" class="space-y-2"></ul>
+          <a href="#" class="btn btn-outline-primary" data-target="places"
+            >Save Places</a
+          >
+        </div>
       </div>
-    </div>
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="card border-rose-100 p-4 text-center">
+              <span
+                class="material-icons"
+                style="color: var(--rose-500); font-size: 2rem"
+                >calculate</span
+              >
+              <h3 class="text-gray-800">Smart Expense Tracking</h3>
+              <p class="text-gray-400">
+                Log shared expenses with categories, dates, and notes. See your
+                spending patterns together.
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card border-rose-100 p-4 text-center">
+              <span
+                class="material-icons"
+                style="color: var(--rose-500); font-size: 2rem"
+                >location_on</span
+              >
+              <h3 class="text-gray-800">Memorable Places</h3>
+              <p class="text-gray-400">
+                Save special locations with photos and memories. Create your own
+                love map together.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <!-- jQuery -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <!-- Custom JS -->
-    <script src="script.js"></script>
+    <section id="features" class="content-section d-none">
+      <div class="container py-5">
+        <h1 class="text-rose-600">Built for Couples</h1>
+        <p class="text-gray-600">
+          Everything you need to manage your shared life, designed with love adn
+          attention to detail.
+        </p>
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-md-6">
+              <div class="card border-rose-100 p-4 text-center">
+                <span
+                  class="material-icons"
+                  style="color: var(--rose-500); font-size: 2rem"
+                  >calculate</span
+                >
+                <h3 class="text-gray-800">Private & Secure</h3>
+                <p class="text-gray-400">
+                  All data stays in your browser.No cloud, no tracking, just you
+                  two.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card border-rose-100 p-4 text-center">
+                <span
+                  class="material-icons"
+                  style="color: var(--rose-500); font-size: 2rem"
+                  >location_on</span
+                >
+                <h3 class="text-gray-800">Memorable Places</h3>
+                <p class="text-gray-400">
+                  Save special locations with photos and memories. Create your
+                  own love map together.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="expense" class="content-section d-none">
+      <!-- <div class="container py-5">
+        <h1 class="text-rose-600">Expenses</h1>
+        <p class="text-gray-600">This is the expenses section.</p>
+      </div> -->
+      <h1>Expense Tracker</h1>
+      <p>this is the test</p>
+      <div></div>
+    </section>
+
+    <section id="map" class="content-section d-none">
+      <div class="container" id="map_section">
+        <h3>Search Place & Show on Map</h3>
+        <input
+          id="searchInput"
+          class="form-control mb-3"
+          type="text"
+          placeholder="Search location..."
+        />
+        <div id="map_container"></div>
+      </div>
+    </section>
+
+    <!-- Google Maps Script -->
+    <script>
+      let map;
+      let marker;
+
+      function initMap() {
+        const defaultLocation = { lat: 16.8661, lng: 96.1951 }; // Yangon
+
+        map = new google.maps.Map(document.getElementById("map_container"), {
+          center: defaultLocation,
+          zoom: 13,
+        });
+
+        const input = document.getElementById("searchInput");
+        const autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo("bounds", map);
+
+        // Clear input when clicked
+        input.addEventListener("click", () => {
+          input.value = "";
+        });
+
+        autocomplete.addListener("place_changed", () => {
+          const place = autocomplete.getPlace();
+          if (!place.geometry) {
+            alert("No details available for input: '" + place.name + "'");
+            return;
+          }
+
+          map.setCenter(place.geometry.location);
+          map.setZoom(15);
+
+          if (marker) marker.setMap(null);
+
+          marker = new google.maps.Marker({
+            map: map,
+            position: place.geometry.location,
+          });
+        });
+      }
+    </script>
+
+    <!-- Replace YOUR_API_KEY_HERE with your actual key -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8eYe7VhkEWSY5bHZQK13KYGNKZ0dIX-g&libraries=places&callback=initMap"
+      async
+      defer
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Section Toggle Script -->
+    <script>
+      document.querySelectorAll("[data-target]").forEach((el) => {
+        el.addEventListener("click", (e) => {
+          e.preventDefault();
+          const targetId = el.getAttribute("data-target");
+          document.querySelectorAll(".content-section").forEach((sec) => {
+            sec.classList.add("d-none");
+          });
+          document.getElementById(targetId).classList.remove("d-none");
+        });
+      });
+    </script>
   </body>
 </html>
