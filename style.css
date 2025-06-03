@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 /* Import Googleean Fonts */
-=======
-/* Import Google Fonts */
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
 
@@ -24,17 +20,6 @@
   --title-color: #1c1c1e;
 }
 
-<<<<<<< HEAD
-=======
-/* Responsive font sizes for large screens */
-@media screen and (min-width: 968px) {
-  :root {
-    --h1-font-size: 2.25rem;
-    --normal-font-size: 1rem;
-  }
-}
-
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
 /* Reset and base font family */
 * {
   box-sizing: border-box;
@@ -44,16 +29,7 @@
 }
 
 /* Full viewport height and prevent scrolling */
-<<<<<<< HEAD
 /* html,
-=======
-html, body {
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* Body styles: margin for header, background gradient, font */
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
 body {
   height: 100vh;
   overflow: hidden;
@@ -77,7 +53,6 @@ a {
   text-decoration: none;
 }
 
-<<<<<<< HEAD
 /* Headings and paragraphs color */
 h1,
 h2,
@@ -86,24 +61,10 @@ h4,
 h5,
 h6,
 p {
-=======
-/* Responsive images */
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Headings and paragraphs color */
-h1, h2, h3, h4, h5, h6, p {
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
   color: #1f2937;
 }
 
 /* Utility text color classes */
-<<<<<<< HEAD
-=======
-.text-muted,
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
 .text-gray-600 {
   color: #4b5563 !important;
 }
@@ -120,7 +81,6 @@ h1, h2, h3, h4, h5, h6, p {
   color: #1f2937 !important;
 }
 
-<<<<<<< HEAD
 #title {
   color: var(--rose-500);
   font-family: "Montserrat", sans-serif;
@@ -132,8 +92,6 @@ h1, h2, h3, h4, h5, h6, p {
   font-size: 4rem;
 }
 
-=======
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
 /* Primary button styles */
 .btn-primary {
   background: linear-gradient(
@@ -156,13 +114,8 @@ h1, h2, h3, h4, h5, h6, p {
 .btn-outline-primary {
   color: var(--rose-500);
   border-color: var(--rose-500);
-<<<<<<< HEAD
   padding: 4px 4px;
   font-size: 1rem;
-=======
-  padding: 6px 14px;
-  font-size: 0.9rem;
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
 }
 
 /* Outline primary button hover effect */
@@ -179,18 +132,6 @@ h1, h2, h3, h4, h5, h6, p {
   border-radius: 10px;
 }
 
-<<<<<<< HEAD
-=======
-/* Utility background and shadow classes */
-.bg-white {
-  background-color: #fff;
-}
-
-.shadow-sm {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
 /* Header/navbar styles */
 .header {
   position: fixed;
@@ -223,12 +164,6 @@ h1, h2, h3, h4, h5, h6, p {
 
 /* Navbar menu layout */
 .nav__menu {
-<<<<<<< HEAD
-=======
-  display: flex;
-  align-items: center;
-  justify-content: center;
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
   flex: 1;
   height: auto;
   padding: 40px 0 20px 0;
@@ -272,22 +207,14 @@ h1, h2, h3, h4, h5, h6, p {
   font-size: var(--tiny-font-size);
 }
 
-<<<<<<< HEAD
 /* Active link styles */
-=======
-/* Active link styles (exclude nav__logo) */
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
 .nav__link.active-link {
   position: relative;
   color: var(--rose-600);
   background-color: #f7bbbf;
 }
 
-<<<<<<< HEAD
 /* Active link indicator dot */
-=======
-/* Active link indicator dot (exclude nav__logo) */
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
 .nav__link.active-link::before {
   content: "";
   position: absolute;
@@ -300,34 +227,6 @@ h1, h2, h3, h4, h5, h6, p {
   border-radius: 50%;
 }
 
-<<<<<<< HEAD
-=======
-/* Section padding */
-.section {
-  padding: 4.5rem 0 2rem;
-}
-
-/* Section title styles */
-.section__title {
-  font-size: var(--h1-font-size);
-  color: var(--rose-600);
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-/* Section minimum height */
-.section__height {
-  min-height: 100vh;
-}
-
-/* Container max width and margin */
-.container {
-  max-width: 968px;
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
 /* Map container size */
 #map_container {
   height: 400px;
@@ -344,7 +243,6 @@ h1, h2, h3, h4, h5, h6, p {
   vertical-align: middle;
 }
 
-<<<<<<< HEAD
 /* Responsive adjustments using Bootstrap */
 .nav__menu {
   display: flex;
@@ -353,27 +251,6 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 /* Mobile: Bottom-fixed navbar */
-=======
-/* Highlight text color */
-.highlight {
-  color: var(--pink-500);
-}
-
-/* Gradient background utility classes */
-.bg-blue-gradient {
-  background: linear-gradient(to bottom right, #60a5fa, #3b82f6);
-}
-
-.bg-pink-gradient {
-  background: linear-gradient(
-    to bottom right,
-    var(--pink-300),
-    var(--rose-500)
-  );
-}
-
-/* Responsive styles for mobile (max-width: 767px) */
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
 @media screen and (max-width: 767px) {
   /* Navbar menu fixed at bottom for mobile */
   .nav__menu {
@@ -393,7 +270,6 @@ h1, h2, h3, h4, h5, h6, p {
     justify-content: space-around;
     width: 100%;
   }
-<<<<<<< HEAD
 }
 
 /* Desktop: Icons next to text */
@@ -402,35 +278,12 @@ h1, h2, h3, h4, h5, h6, p {
     flex-direction: row;
     align-items: center;
     column-gap: 0.5rem;
-=======
-
-  /* Hide login on mobile */
-  .nav__login {
-    display: none;
-  }
-}
-
-/* Responsive styles for tablet and up (min-width: 768px) */
-@media screen and (min-width: 768px) {
-  /* Larger section padding */
-  .section {
-    padding: 7rem 0 2rem;
-  }
-
-  /* Navbar height adjustment */
-  .nav {
-    height: calc(var(--header-height) + 1.5rem);
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
   }
 
   /* Hide navbar icons on desktop */
   .nav__icon {
-<<<<<<< HEAD
     display: inline-block;
     vertical-align: middle;
-=======
-    display: none;
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
   }
 
   /* Navbar name font size */
@@ -443,15 +296,3 @@ h1, h2, h3, h4, h5, h6, p {
     bottom: 1.75rem;
   }
 }
-<<<<<<< HEAD
-=======
-
-/* Responsive styles for large screens (min-width: 1024px) */
-@media screen and (min-width: 1024px) {
-  /* Center container */
-  .container {
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
->>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
