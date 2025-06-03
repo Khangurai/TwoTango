@@ -1,0 +1,457 @@
+<<<<<<< HEAD
+/* Import Googleean Fonts */
+=======
+/* Import Google Fonts */
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+
+/* Root variables for colors, font sizes, z-index, etc. */
+:root {
+  --rose-500: #f43f5e;
+  --rose-600: #e11d48;
+  --pink-300: #fda4af;
+  --pink-500: #ec4899;
+  --pink-600: #db2777;
+  --orange-400: #fb923c;
+  --header-height: 4rem;
+  --h1-font-size: 1.5rem;
+  --normal-font-size: 0.938rem;
+  --tiny-font-size: 0.625rem;
+  --z-tooltip: 10;
+  --z-fixed: 100;
+  --container-color: rgba(255, 255, 255, 0.8);
+  --title-color: #1c1c1e;
+}
+
+<<<<<<< HEAD
+=======
+/* Responsive font sizes for large screens */
+@media screen and (min-width: 968px) {
+  :root {
+    --h1-font-size: 2.25rem;
+    --normal-font-size: 1rem;
+  }
+}
+
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+/* Reset and base font family */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Open Sans", "Montserrat", "Poppins", sans-serif;
+}
+
+/* Full viewport height and prevent scrolling */
+<<<<<<< HEAD
+/* html,
+=======
+html, body {
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Body styles: margin for header, background gradient, font */
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+body {
+  height: 100vh;
+  overflow: hidden;
+} */
+
+/* Body styles: margin for header, background gradient, font */
+body {
+  margin-top: var(--header-height);
+  font-family: "Open Sans", sans-serif;
+  font-size: var(--normal-font-size);
+  background: linear-gradient(135deg, #fdf2f8 0%, #ffe4e6 50%, #fff7ed 100%);
+  min-height: 100vh;
+}
+
+/* Remove list and link default styles */
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+<<<<<<< HEAD
+/* Headings and paragraphs color */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+=======
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Headings and paragraphs color */
+h1, h2, h3, h4, h5, h6, p {
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+  color: #1f2937;
+}
+
+/* Utility text color classes */
+<<<<<<< HEAD
+=======
+.text-muted,
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+.text-gray-600 {
+  color: #4b5563 !important;
+}
+
+.text-rose-600 {
+  color: var(--rose-600);
+}
+
+.text-gray-400 {
+  color: #9ca3af !important;
+}
+
+.text-gray-800 {
+  color: #1f2937 !important;
+}
+
+<<<<<<< HEAD
+#title {
+  color: var(--rose-500);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 4rem;
+}
+
+=======
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+/* Primary button styles */
+.btn-primary {
+  background: linear-gradient(
+    to right,
+    var(--rose-500),
+    var(--pink-500),
+    var(--orange-400)
+  );
+  border: none;
+  color: white;
+  padding: 10px 20px;
+}
+
+/* Primary button hover effect */
+.btn-primary:hover {
+  background: linear-gradient(to right, var(--rose-600), var(--pink-600));
+}
+
+/* Outline primary button styles */
+.btn-outline-primary {
+  color: var(--rose-500);
+  border-color: var(--rose-500);
+<<<<<<< HEAD
+  padding: 4px 4px;
+  font-size: 1rem;
+=======
+  padding: 6px 14px;
+  font-size: 0.9rem;
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+}
+
+/* Outline primary button hover effect */
+.btn-outline-primary:hover {
+  color: white;
+  background: linear-gradient(to right, var(--rose-600), var(--pink-600));
+  border-color: var(--rose-600);
+}
+
+/* Card component styles */
+.card {
+  background-color: var(--container-color);
+  border: 1px solid #ffe4e6;
+  border-radius: 10px;
+}
+
+<<<<<<< HEAD
+=======
+/* Utility background and shadow classes */
+.bg-white {
+  background-color: #fff;
+}
+
+.shadow-sm {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+/* Header/navbar styles */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: 0.4s;
+  z-index: var(--z-fixed);
+}
+
+/* Navbar container layout */
+.nav_container {
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5rem;
+}
+
+/* Logo styles */
+.nav__logo {
+  color: var(--rose-500);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+}
+
+/* Navbar menu layout */
+.nav__menu {
+<<<<<<< HEAD
+=======
+  display: flex;
+  align-items: center;
+  justify-content: center;
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+  flex: 1;
+  height: auto;
+  padding: 40px 0 20px 0;
+}
+
+/* Navbar list layout */
+.nav__list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  width: auto;
+}
+
+/* Navbar link styles */
+.nav__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 4px;
+  color: var(--title-color);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* Navbar link hover effect */
+.nav__link:hover {
+  color: var(--rose-600);
+  background-color: #fac5c8;
+}
+
+/* Navbar icon size */
+.nav__icon {
+  font-size: 1.2rem;
+}
+
+/* Navbar name font size */
+.nav__name {
+  font-size: var(--tiny-font-size);
+}
+
+<<<<<<< HEAD
+/* Active link styles */
+=======
+/* Active link styles (exclude nav__logo) */
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+.nav__link.active-link {
+  position: relative;
+  color: var(--rose-600);
+  background-color: #f7bbbf;
+}
+
+<<<<<<< HEAD
+/* Active link indicator dot */
+=======
+/* Active link indicator dot (exclude nav__logo) */
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+.nav__link.active-link::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -0.5rem;
+  width: 4px;
+  height: 4px;
+  background-color: var(--rose-600);
+  border-radius: 50%;
+}
+
+<<<<<<< HEAD
+=======
+/* Section padding */
+.section {
+  padding: 4.5rem 0 2rem;
+}
+
+/* Section title styles */
+.section__title {
+  font-size: var(--h1-font-size);
+  color: var(--rose-600);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Section minimum height */
+.section__height {
+  min-height: 100vh;
+}
+
+/* Container max width and margin */
+.container {
+  max-width: 968px;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+/* Map container size */
+#map_container {
+  height: 400px;
+  width: 100%;
+}
+
+/* Map section padding */
+#map_section {
+  padding: 50px;
+}
+
+/* Material icons vertical alignment */
+.material-icons {
+  vertical-align: middle;
+}
+
+<<<<<<< HEAD
+/* Responsive adjustments using Bootstrap */
+.nav__menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Mobile: Bottom-fixed navbar */
+=======
+/* Highlight text color */
+.highlight {
+  color: var(--pink-500);
+}
+
+/* Gradient background utility classes */
+.bg-blue-gradient {
+  background: linear-gradient(to bottom right, #60a5fa, #3b82f6);
+}
+
+.bg-pink-gradient {
+  background: linear-gradient(
+    to bottom right,
+    var(--pink-300),
+    var(--rose-500)
+  );
+}
+
+/* Responsive styles for mobile (max-width: 767px) */
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+@media screen and (max-width: 767px) {
+  /* Navbar menu fixed at bottom for mobile */
+  .nav__menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4rem;
+    background-color: var(--container-color);
+    box-shadow: 0 -1px 12px rgba(0, 0, 0, 0.05);
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Navbar list full width and spaced */
+  .nav__list {
+    justify-content: space-around;
+    width: 100%;
+  }
+<<<<<<< HEAD
+}
+
+/* Desktop: Icons next to text */
+@media screen and (min-width: 768px) {
+  .nav__link {
+    flex-direction: row;
+    align-items: center;
+    column-gap: 0.5rem;
+=======
+
+  /* Hide login on mobile */
+  .nav__login {
+    display: none;
+  }
+}
+
+/* Responsive styles for tablet and up (min-width: 768px) */
+@media screen and (min-width: 768px) {
+  /* Larger section padding */
+  .section {
+    padding: 7rem 0 2rem;
+  }
+
+  /* Navbar height adjustment */
+  .nav {
+    height: calc(var(--header-height) + 1.5rem);
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+  }
+
+  /* Hide navbar icons on desktop */
+  .nav__icon {
+<<<<<<< HEAD
+    display: inline-block;
+    vertical-align: middle;
+=======
+    display: none;
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
+  }
+
+  /* Navbar name font size */
+  .nav__name {
+    font-size: var(--normal-font-size);
+  }
+
+  /* Adjust active link indicator position */
+  .active-link::before {
+    bottom: 1.75rem;
+  }
+}
+<<<<<<< HEAD
+=======
+
+/* Responsive styles for large screens (min-width: 1024px) */
+@media screen and (min-width: 1024px) {
+  /* Center container */
+  .container {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+>>>>>>> f4ea8474d10ce19fe0fa014bca567e46028db053
