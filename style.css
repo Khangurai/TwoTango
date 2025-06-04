@@ -348,11 +348,11 @@ p {
   /* background: #fff; */
   /* border-top: 2px solid #fbb6ce; */
   color: #6c757d;
-  position: fixed;      /* ← ဒီလိုထည့်ပါ */
-  left: 0;              /* ← ဒီလိုထည့်ပါ */
-  bottom: 0;            /* ← ဒီလိုထည့်ပါ */
-  width: 100%;          /* ← ဒီလိုထည့်ပါ */
-  z-index: 1000;        /* ← ဒီလိုထည့်ပါ */
+  position: fixed; /* ← ဒီလိုထည့်ပါ */
+  left: 0; /* ← ဒီလိုထည့်ပါ */
+  bottom: 0; /* ← ဒီလိုထည့်ပါ */
+  width: 100%; /* ← ဒီလိုထည့်ပါ */
+  z-index: 1000; /* ← ဒီလိုထည့်ပါ */
 }
 .custom-footer .text-rose-600 {
   color: #e11d48 !important;
@@ -388,4 +388,62 @@ p {
   .custom-footer .footer-icon {
     display: inline-flex;
   }
+}
+
+/* expense tab */
+.gradient-title {
+  background: linear-gradient(to right, #f43f5e, #db2777);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+}
+.gradient-button {
+  background: linear-gradient(to right, #f43f5e, #db2777);
+  border: none;
+  color: white;
+}
+.gradient-button:hover {
+  background: linear-gradient(to right, #e11d48, #be185d);
+  color: white;
+}
+.partner1-circle {
+  background: linear-gradient(to bottom right, #60a5fa, #2563eb);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+.partner2-circle {
+  background: linear-gradient(to bottom right, #f472b6, #db2777);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+.settlement-card {
+  background: linear-gradient(to right, #fff1f2, #fce7f3);
+  border: 1px solid #fecdd3;
+}
+.category-badge {
+  background-color: #ffe4e6;
+  color: #be185d;
+}
+.geo-badge {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+#map {
+  height: 300px;
+  width: 100%;
 }
