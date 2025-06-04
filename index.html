@@ -209,7 +209,8 @@
                 <div class="text-start">
                   <h3 class="text-gray-800">Easy Expense Splitting</h3>
                   <p class="text-gray-400">
-                    Track who paid what and keep everything fair and transparent.
+                    Track who paid what and keep everything fair and
+                    transparent.
                   </p>
                 </div>
               </div>
@@ -586,7 +587,7 @@
         </div>
       </section>
       <!-- map -->
-      <section id="map" class="content-section d-none">
+      <section id="map1" class="content-section d-none">
         <div class="container" id="map_section">
           <h3 class="text-rose-600 fw-bold">Search Place & Show on Map</h3>
           <input
@@ -675,7 +676,7 @@
 
     <!-- google mpas script for expense tab -->
     <script>
-      let map, marker, autocomplete;
+      let map, marker, autocomplete, input;
 
       function initMap() {
         map = new google.maps.Map(document.getElementById("map"), {
@@ -685,7 +686,7 @@
 
         marker = new google.maps.Marker({ map });
 
-        const input = document.getElementById("autocomplete");
+        input = document.getElementById("autocomplete");
         autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.bindTo("bounds", map);
 
@@ -703,9 +704,14 @@
           };
 
           document.getElementById("location-info").innerHTML = `
-            <strong>${place.name}</strong><br>
-            Address: ${place.formatted_address}
-          `;
+        <strong>${place.name}</strong><br>
+        Address: ${place.formatted_address}
+      `;
+        });
+
+        // Add click event listener to clear input
+        input.addEventListener("click", () => {
+          input.value = "";
         });
       }
     </script>
