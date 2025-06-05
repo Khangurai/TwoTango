@@ -1,18 +1,25 @@
 // Section Toggle Script
-document.querySelectorAll("[data-target]").forEach((el) => {
-  el.addEventListener("click", (e) => {
+document.querySelectorAll("[data-target]").forEach((button) => {
+  button.addEventListener("click", (e) => {
     e.preventDefault();
-    const targetId = el.getAttribute("data-target");
-    document.querySelectorAll(".content-section").forEach((sec) => {
-      sec.classList.add("d-none");
-    });
-    document.getElementById(targetId).classList.remove("d-none");
 
-    // Update active link
-    document.querySelectorAll(".nav__link").forEach((link) => {
-      link.classList.remove("active-link");
+    // Hide all contents
+    document.querySelectorAll(".content-section").forEach((content) => {
+      content.classList.add("d-none");
     });
-    el.classList.add("active-link");
+
+    // Show target content
+    const targetId = button.dataset.target; // or button.getAttribute('data-target')
+    const contentToShow = document.getElementById(targetId);
+    if (contentToShow) {
+      contentToShow.classList.remove("d-none");
+    }
+
+    // Update active state
+    document.querySelectorAll(".nav__link").forEach((navLink) => {
+      navLink.classList.remove("active-link");
+    });
+    button.classList.add("active-link");
   });
 });
 
@@ -798,8 +805,5 @@ audio.addEventListener("ended", nextSong);
 // Time of song
 audio.addEventListener("timeupdate", DurTime);
 
-
 //footer
 document.getElementById("currentYear").textContent = new Date().getFullYear();
-
-
