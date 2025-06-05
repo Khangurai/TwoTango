@@ -223,7 +223,7 @@ function startEditing(expense) {
   document.getElementById("date").value = formData.date;
   document.getElementById("paidBy").value = formData.paidBy;
   document.getElementById("notes").value = formData.notes;
-  includeLocation = !expense.location;
+  includeLocation = !!expense.location; // location ရှိရင် true
   includeLocationCheckbox.checked = includeLocation;
   locationSection.classList.toggle("d-none", !includeLocation);
   if (expense.location) {
@@ -423,3 +423,59 @@ updateUI();
 // Expose functions to global scope for button onclick
 window.startEditing = startEditing;
 window.deleteExpense = deleteExpense;
+
+// Google Maps Integration
+function initializeExpenseMap() {
+  const defaultLocation = { lat: 16.8661, lng: 96.1951 }; // Yangon
+  const map = new google.maps.Map(document.getElementById("expenseMap"), {
+    center: defaultLocation,
+    zoom: 13,
+  });
+  const marker = new google.maps.Marker({ map: map });
+
+  const input = document.getElementById("autocomplete");
+  const autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo("bounds", map);
+
+  autocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
+    if (!place.geometry) return;
+
+    map.setCenter(place.geometry.location);
+    map.setZoom(15);
+    marker.setPosition(place.geometry.location);
+
+    formData.location = {
+      name: place.name,
+      address: place.formatted_address,
+    };
+
+    document.getElementById("location-info").innerHTML = `
+      <strong>${place.name}</strong><br>
+      Address: ${place.formatted_address}
+    `;
+  });
+
+  input.addEventListener("click", () => {
+    input.value = "";
+  });
+}
+
+// Call the map initialization when the expense section is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  const expenseSection = document.getElementById("expense");
+  if (expenseSection) {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (!expenseSection.classList.contains("d-none")) {
+          initializeExpenseMap();
+          observer.disconnect(); // Stop observing once map is initialized
+        }
+      });
+    });
+    observer.observe(expenseSection, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+});
