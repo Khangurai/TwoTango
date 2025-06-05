@@ -1,3 +1,101 @@
+// Section Toggle Script
+document.querySelectorAll("[data-target]").forEach((el) => {
+  el.addEventListener("click", (e) => {
+    e.preventDefault();
+    const targetId = el.getAttribute("data-target");
+    document.querySelectorAll(".content-section").forEach((sec) => {
+      sec.classList.add("d-none");
+    });
+    document.getElementById(targetId).classList.remove("d-none");
+
+    // Update active link
+    document.querySelectorAll(".nav__link").forEach((link) => {
+      link.classList.remove("active-link");
+    });
+    el.classList.add("active-link");
+  });
+});
+
+// google Map Section
+let expenseMap,
+  mapMap,
+  expenseMarker,
+  mapMarker,
+  expenseAutocomplete,
+  mapAutocomplete;
+
+function initMap() {
+  // Expense Map Initialization
+  const defaultLocation = { lat: 16.8661, lng: 96.1951 }; // Yangon
+  expenseMap = new google.maps.Map(document.getElementById("expenseMap"), {
+    center: defaultLocation,
+    zoom: 13,
+  });
+  expenseMarker = new google.maps.Marker({ map: expenseMap });
+
+  const expenseInput = document.getElementById("autocomplete");
+  expenseAutocomplete = new google.maps.places.Autocomplete(expenseInput);
+  expenseAutocomplete.bindTo("bounds", expenseMap);
+
+  expenseAutocomplete.addListener("place_changed", () => {
+    const place = expenseAutocomplete.getPlace();
+    if (!place.geometry) return;
+
+    expenseMap.setCenter(place.geometry.location);
+    expenseMap.setZoom(15);
+    expenseMarker.setPosition(place.geometry.location);
+
+    // formData ကို သင့် script.js ကနေ သုံးမယ်လို့ ယူထားပါတယ်
+    window.formData = window.formData || {};
+    window.formData.location = {
+      name: place.name,
+      address: place.formatted_address,
+    };
+
+    document.getElementById("location-info").innerHTML = `
+        <strong>${place.name}</strong><br>
+        Address: ${place.formatted_address}
+      `;
+  });
+
+  expenseInput.addEventListener("click", () => {
+    expenseInput.value = "";
+  });
+
+  // Map Section Initialization
+  mapMap = new google.maps.Map(document.getElementById("mapMap"), {
+    center: defaultLocation,
+    zoom: 13,
+  });
+  mapMarker = new google.maps.Marker({ map: mapMap });
+
+  const mapInput = document.getElementById("searchInput");
+  mapAutocomplete = new google.maps.places.Autocomplete(mapInput);
+  mapAutocomplete.bindTo("bounds", mapMap);
+
+  mapAutocomplete.addListener("place_changed", () => {
+    const place = mapAutocomplete.getPlace();
+    if (!place.geometry) {
+      alert("No details available for input: '" + place.name + "'");
+      return;
+    }
+
+    mapMap.setCenter(place.geometry.location);
+    mapMap.setZoom(15);
+
+    if (mapMarker) mapMarker.setMap(null);
+    mapMarker = new google.maps.Marker({
+      map: mapMap,
+      position: place.geometry.location,
+    });
+  });
+
+  mapInput.addEventListener("click", () => {
+    mapInput.value = "";
+  });
+}
+
+// expense section
 // Data and State
 let expenses = JSON.parse(localStorage.getItem("twotango-expenses")) || [];
 let editingExpenseId = null;

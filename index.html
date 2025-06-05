@@ -312,16 +312,19 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3">
+            <a href="#" data-target="map" id="geoTaggedLink" class="col-md-3">
               <div class="card border-danger-subtle">
                 <div class="card-body">
                   <h5 class="card-title d-flex align-items-center">
                     <i class="bi bi-geo-alt text-danger me-2"></i> Geo-Tagged
+                    <span id="geoTaggedLink" class="fs-6 text-rose-600"
+                      >(view in map)</span
+                    >
                   </h5>
                   <h3 class="card-text text-danger" id="geoTaggedCount">0</h3>
                 </div>
               </div>
-            </div>
+            </a>
           </div>
 
           <!-- Partner Balance Card -->
@@ -691,91 +694,7 @@
       <div>&copy; 2025 TwoTango – Made with ❤️</div>
     </footer> -->
 
-    <!-- Google Maps Script for map tab -->
     <!-- <script>
-      let map;
-      let marker;
-
-      function initMap() {
-        const defaultLocation = { lat: 16.8661, lng: 96.1951 }; // Yangon
-
-        map = new google.maps.Map(document.getElementById("map_container"), {
-          center: defaultLocation,
-          zoom: 13,
-        });
-
-        const input = document.getElementById("searchInput");
-        const autocomplete = new google.maps.places.Autocomplete(input);
-        autocomplete.bindTo("bounds", map);
-
-        // Clear input when clicked
-        input.addEventListener("click", () => {
-          input.value = "";
-        });
-
-        autocomplete.addListener("place_changed", () => {
-          const place = autocomplete.getPlace();
-          if (!place.geometry) {
-            alert("No details available for input: '" + place.name + "'");
-            return;
-          }
-
-          map.setCenter(place.geometry.location);
-          map.setZoom(15);
-
-          if (marker) marker.setMap(null);
-
-          marker = new google.maps.Marker({
-            map: map,
-            position: place.geometry.location,
-          });
-        });
-      }
-    </script> -->
-
-    <!-- google mpas script for expense tab -->
-    <!-- <script>
-      let map, marker, autocomplete, input;
-
-      function initMap() {
-        map = new google.maps.Map(document.getElementById("map"), {
-          center: { lat: 16.8661, lng: 96.1951 },
-          zoom: 13,
-        });
-
-        marker = new google.maps.Marker({ map });
-
-        input = document.getElementById("autocomplete");
-        autocomplete = new google.maps.places.Autocomplete(input);
-        autocomplete.bindTo("bounds", map);
-
-        autocomplete.addListener("place_changed", () => {
-          const place = autocomplete.getPlace();
-          if (!place.geometry) return;
-
-          map.setCenter(place.geometry.location);
-          map.setZoom(15);
-          marker.setPosition(place.geometry.location);
-
-          formData.location = {
-            name: place.name,
-            address: place.formatted_address,
-          };
-
-          document.getElementById("location-info").innerHTML = `
-        <strong>${place.name}</strong><br>
-        Address: ${place.formatted_address}
-      `;
-        });
-
-        // Add click event listener to clear input
-        input.addEventListener("click", () => {
-          input.value = "";
-        });
-      }
-    </script> -->
-
-    <script>
       let expenseMap,
         mapMap,
         expenseMarker,
@@ -856,7 +775,7 @@
           mapInput.value = "";
         });
       }
-    </script>
+    </script> -->
 
     <!-- Google Maps API -->
     <script
@@ -871,25 +790,6 @@
       crossorigin="anonymous"
     ></script>
 
-    <!-- Section Toggle Script -->
-    <script>
-      document.querySelectorAll("[data-target]").forEach((el) => {
-        el.addEventListener("click", (e) => {
-          e.preventDefault();
-          const targetId = el.getAttribute("data-target");
-          document.querySelectorAll(".content-section").forEach((sec) => {
-            sec.classList.add("d-none");
-          });
-          document.getElementById(targetId).classList.remove("d-none");
-
-          // Update active link
-          document.querySelectorAll(".nav__link").forEach((link) => {
-            link.classList.remove("active-link");
-          });
-          el.classList.add("active-link");
-        });
-      });
-    </script>
     <!-- Custom Scripts -->
     <script src="script.js"></script>
   </body>
