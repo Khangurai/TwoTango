@@ -672,7 +672,7 @@
         <div class="text-start">
           <span class="fw-bold text-rose-600">TwoTango</span>
           <span class="text-muted ms-2"
-            >&copy; 2024. Made with
+            >&copy; <span id="currentYear"></span>. Made with
             <span class="text-danger">&hearts;</span></span
           >
         </div>
@@ -789,7 +789,23 @@
       integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
       crossorigin="anonymous"
     ></script>
-
+    <!-- Vanta.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+      if (window.VANTA && document.querySelector(".nav_container")) {
+        window.VANTA.CLOUDS({
+        el: ".nav_container",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 50.0,
+        minWidth: 200.0,
+        });
+      }
+      });
+    </script>
     <!-- Custom Scripts -->
     <script src="script.js"></script>
   </body>

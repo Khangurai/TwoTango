@@ -797,3 +797,9 @@ audio.addEventListener("ended", nextSong);
 
 // Time of song
 audio.addEventListener("timeupdate", DurTime);
+
+
+//footer
+document.getElementById("currentYear").textContent = new Date().getFullYear();
+
+
