@@ -23,7 +23,7 @@ document.querySelectorAll("[data-target]").forEach((button) => {
   });
 });
 
-// google Map Section
+// Google Map Section
 let expenseMap,
   mapMap,
   expenseMarker,
@@ -102,7 +102,7 @@ function initMap() {
   });
 }
 
-// expense section
+// Expense Section
 // Data and State
 let expenses = JSON.parse(localStorage.getItem("twotango-expenses")) || [];
 let editingExpenseId = null;
@@ -529,32 +529,11 @@ updateUI();
 window.startEditing = startEditing;
 window.deleteExpense = deleteExpense;
 
-
-// Call the map initialization when the expense section is loaded
-document.addEventListener("DOMContentLoaded", () => {
-  const expenseSection = document.getElementById("expense");
-  if (expenseSection) {
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (!expenseSection.classList.contains("d-none")) {
-          initializeExpenseMap();
-          observer.disconnect(); // Stop observing once map is initialized
-        }
-      });
-    });
-    observer.observe(expenseSection, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-  }
-});
-
-// music
+// Music Section
 const musicContainer = document.getElementById("music-container");
 const playBtn = document.getElementById("play");
 const prevBtn = document.getElementById("prev");
 const nextBtn = document.getElementById("next");
-
 const audio = document.getElementById("audio");
 const progress = document.getElementById("progress");
 const progressContainer = document.getElementById("progress-container");
@@ -769,5 +748,5 @@ audio.addEventListener("ended", nextSong);
 // Time of song
 audio.addEventListener("timeupdate", DurTime);
 
-//footer
+// Footer
 document.getElementById("currentYear").textContent = new Date().getFullYear();

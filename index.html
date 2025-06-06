@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="style.css" />
     <link
       rel="shortcut icon"
-      href="/img/favicon_io/favicon.ico"
+      href="/images/favicon_io/favicon.ico"
       type="image/x-icon"
     />
   </head>
@@ -55,12 +55,12 @@
                 <span class="nav__name">Home</span>
               </a>
             </li>
-            <li class="nav__item">
+            <!-- <li class="nav__item">
               <a href="#" class="nav__link" data-target="features">
                 <i class="bi bi-info-circle-fill nav__icon"></i>
                 <span class="nav__name">Features</span>
               </a>
-            </li>
+            </li> -->
             <li class="nav__item">
               <a href="#" class="nav__link" data-target="expense">
                 <i class="bi bi-journal nav__icon"></i>
@@ -90,6 +90,7 @@
 
     <!-- Sections -->
     <main>
+      <!-- home -->
       <section id="home" class="content-section">
         <div class="text-center py-5">
           <h1 class="text-rose-600 fw-bold display-4" id="title">TwoTango</h1>
@@ -138,23 +139,6 @@
                 </p>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-      <!-- features -->
-      <section id="features" class="content-section d-none">
-        <div class="container">
-          <div class="mb-12">
-            <h2 class="text-4xl fw-bold mbb-4 gradient-title">
-              Built for Couples
-            </h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-              Everything you need to manage your shared life, designed with love
-              and attention to detail.
-            </p>
-          </div>
-
-          <div class="row g-4">
             <!-- Card 1: Private & Secure -->
             <div class="col-12 col-md-6">
               <div class="card border-rose-100 p-4">
@@ -263,6 +247,25 @@
           </div>
         </div>
       </section>
+
+      <!-- features -->
+      <!-- <section id="features" class="content-section d-none">
+        <div class="container">
+          <div class="mb-12">
+            <h2 class="text-4xl fw-bold mbb-4 gradient-title">
+              Built for Couples
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+              Everything you need to manage your shared life, designed with love
+              and attention to detail.
+            </p>
+          </div>
+
+          <div class="row g-4">
+            
+          </div>
+        </div>
+      </section> -->
 
       <!-- expense -->
       <section id="expense" class="content-section d-none">
@@ -526,7 +529,6 @@
                           placeholder="Enter a location"
                         />
                         <div id="expenseMap" style="height: 300px"></div>
-                        <!-- ပြောင်းထားတယ် -->
                         <div id="location-info"></div>
                         <div class="col-12">
                           <button
@@ -574,8 +576,9 @@
             </div>
           </div>
 
-          <!-- Expenses List -->
-          <div id="expensesList"></div>
+          
+
+          
 
           <!-- Toast Container -->
           <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -599,6 +602,8 @@
             </div>
           </div>
         </div>
+        <!-- Expenses List -->
+        <div id="expensesList"></div>
       </section>
       <!-- map -->
       <section id="map" class="content-section d-none">
@@ -694,89 +699,6 @@
       <div>&copy; 2025 TwoTango – Made with ❤️</div>
     </footer> -->
 
-    <!-- <script>
-      let expenseMap,
-        mapMap,
-        expenseMarker,
-        mapMarker,
-        expenseAutocomplete,
-        mapAutocomplete;
-
-      function initMap() {
-        // Expense Map Initialization
-        const defaultLocation = { lat: 16.8661, lng: 96.1951 }; // Yangon
-        expenseMap = new google.maps.Map(
-          document.getElementById("expenseMap"),
-          {
-            center: defaultLocation,
-            zoom: 13,
-          }
-        );
-        expenseMarker = new google.maps.Marker({ map: expenseMap });
-
-        const expenseInput = document.getElementById("autocomplete");
-        expenseAutocomplete = new google.maps.places.Autocomplete(expenseInput);
-        expenseAutocomplete.bindTo("bounds", expenseMap);
-
-        expenseAutocomplete.addListener("place_changed", () => {
-          const place = expenseAutocomplete.getPlace();
-          if (!place.geometry) return;
-
-          expenseMap.setCenter(place.geometry.location);
-          expenseMap.setZoom(15);
-          expenseMarker.setPosition(place.geometry.location);
-
-          // formData ကို သင့် script.js ကနေ သုံးမယ်လို့ ယူထားပါတယ်
-          window.formData = window.formData || {};
-          window.formData.location = {
-            name: place.name,
-            address: place.formatted_address,
-          };
-
-          document.getElementById("location-info").innerHTML = `
-        <strong>${place.name}</strong><br>
-        Address: ${place.formatted_address}
-      `;
-        });
-
-        expenseInput.addEventListener("click", () => {
-          expenseInput.value = "";
-        });
-
-        // Map Section Initialization
-        mapMap = new google.maps.Map(document.getElementById("mapMap"), {
-          center: defaultLocation,
-          zoom: 13,
-        });
-        mapMarker = new google.maps.Marker({ map: mapMap });
-
-        const mapInput = document.getElementById("searchInput");
-        mapAutocomplete = new google.maps.places.Autocomplete(mapInput);
-        mapAutocomplete.bindTo("bounds", mapMap);
-
-        mapAutocomplete.addListener("place_changed", () => {
-          const place = mapAutocomplete.getPlace();
-          if (!place.geometry) {
-            alert("No details available for input: '" + place.name + "'");
-            return;
-          }
-
-          mapMap.setCenter(place.geometry.location);
-          mapMap.setZoom(15);
-
-          if (mapMarker) mapMarker.setMap(null);
-          mapMarker = new google.maps.Marker({
-            map: mapMap,
-            position: place.geometry.location,
-          });
-        });
-
-        mapInput.addEventListener("click", () => {
-          mapInput.value = "";
-        });
-      }
-    </script> -->
-
     <!-- Google Maps API -->
     <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8eYe7VhkEWSY5bHZQK13KYGNKZ0dIX-g&libraries=places&callback=initMap"
@@ -790,22 +712,22 @@
       crossorigin="anonymous"
     ></script>
     <!-- Vanta.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-      if (window.VANTA && document.querySelector(".nav_container")) {
-        window.VANTA.CLOUDS({
-        el: ".nav_container",
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 50.0,
-        minWidth: 200.0,
-        });
-      }
+        if (window.VANTA && document.querySelector(".nav_container")) {
+          window.VANTA.CLOUDS({
+            el: ".nav_container",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 50.0,
+            minWidth: 200.0,
+          });
+        }
       });
-    </script>
+    </script> -->
     <!-- Custom Scripts -->
     <script src="script.js"></script>
   </body>
