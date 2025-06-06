@@ -41,28 +41,17 @@ function initMap() {
   expenseMarker = new google.maps.Marker({ map: expenseMap });
 
   const expenseInput = document.getElementById("autocomplete");
-  expenseAutocomplete = new google.maps.places.Autocomplete(expenseInput);
-  expenseAutocomplete.bindTo("bounds", expenseMap);
+  const expenseAutocomplete = new google.maps.places.Autocomplete(expenseInput);
 
   expenseAutocomplete.addListener("place_changed", () => {
     const place = expenseAutocomplete.getPlace();
     if (!place.geometry) return;
 
-    expenseMap.setCenter(place.geometry.location);
-    expenseMap.setZoom(15);
-    expenseMarker.setPosition(place.geometry.location);
-
-    // formData ကို သင့် script.js ကနေ သုံးမယ်လို့ ယူထားပါတယ်
-    window.formData = window.formData || {};
-    window.formData.location = {
+    // ဒီမှာသာ formData.location ကို update လုပ်ပါ
+    formData.location = {
       name: place.name,
       address: place.formatted_address,
     };
-
-    document.getElementById("location-info").innerHTML = `
-        <strong>${place.name}</strong><br>
-        Address: ${place.formatted_address}
-      `;
   });
 
   expenseInput.addEventListener("click", () => {
@@ -109,7 +98,6 @@ let editingExpenseId = null;
 let includeLocation = false;
 let locationMethod = "current";
 let formData = {
-  description: "",
   amount: "",
   category: "",
   date: new Date().toISOString().split("T")[0],
@@ -157,7 +145,6 @@ addExpenseBtn.addEventListener("click", () => {
 // Initialize Form
 function resetForm() {
   formData = {
-    description: "",
     amount: "",
     category: "",
     date: new Date().toISOString().split("T")[0],
@@ -221,6 +208,12 @@ getCurrentLocationBtn.addEventListener("click", () => {
 
 // Set Custom Location
 setCustomLocationBtn.addEventListener("click", () => {
+  if (formData.location) {
+    console.log("Location object:", formData.location);
+    console.log("Location name:", formData.location.name);
+  } else {
+    console.log("No location selected yet");
+  }
   if (!formData.location || !formData.location.name) {
     showToast("Please select a location using the autocomplete", true);
     return;
@@ -275,18 +268,12 @@ cancelExpenseBtn.addEventListener("click", () => {
 // Form Submission
 expenseForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  if (
-    !formData.description ||
-    !formData.amount ||
-    !formData.category ||
-    !formData.paidBy
-  ) {
+  if (!formData.amount || !formData.category || !formData.paidBy) {
     showToast("Please fill in all required fields", true);
     return;
   }
   const expenseData = {
     id: editingExpenseId || Date.now().toString(),
-    description: formData.description,
     amount: parseFloat(formData.amount),
     category: formData.category,
     date: formData.date,
@@ -313,7 +300,6 @@ expenseForm.addEventListener("submit", (e) => {
 function startEditing(expense) {
   editingExpenseId = expense.id;
   formData = {
-    description: expense.description,
     amount: expense.amount.toString(),
     category: expense.category,
     date: expense.date,
@@ -322,7 +308,6 @@ function startEditing(expense) {
     location: expense.location,
     customAddress: expense.location?.address || "",
   };
-  document.getElementById("description").value = formData.description;
   document.getElementById("amount").value = formData.amount;
   document.getElementById("category").value = formData.category;
   document.getElementById("date").value = formData.date;
@@ -388,10 +373,10 @@ function updateUI() {
   // Update Summary Cards
   document.getElementById(
     "totalExpenses"
-  ).textContent = `$${totalExpenses.toFixed(2)}`;
+  ).textContent = `${totalExpenses.toFixed(2)}MMK`;
   document.getElementById(
     "monthExpenses"
-  ).textContent = `$${monthExpenses.toFixed(2)}`;
+  ).textContent = `${monthExpenses.toFixed(2)}MMK`;
   document.getElementById("categoryCount").textContent =
     Object.keys(expensesByCategory).length;
   document.getElementById("geoTaggedCount").textContent =
@@ -400,26 +385,26 @@ function updateUI() {
   // Update Partner Balance
   document.getElementById(
     "partner1Paid"
-  ).textContent = `$${partner1ActualPaid.toFixed(0)}`;
+  ).textContent = `${partner1ActualPaid.toFixed(0)}MMK`;
   document.getElementById("partner2Paid").textContent = `${
     partner2Balance < 0 ? "-" : ""
-  }$${Math.abs(partner2ActualPaid).toFixed(0)}`;
+  }${Math.abs(partner2ActualPaid).toFixed(0)}MMK`;
   document.getElementById(
     "partner1Percentage"
   ).textContent = `${partner1Percentage}%`;
   document.getElementById(
     "partner2Percentage"
   ).textContent = `${partner2Percentage}%`;
-  document.getElementById("partner1Share").textContent = `$${
+  document.getElementById("partner1Share").textContent = `${
     totalSharedExpenses > 0
       ? (totalSharedExpenses * (partner1Percentage / 100)).toFixed(0)
       : "0"
-  }`;
+  }MMK`;
   document.getElementById("partner2Share").textContent = `$${
     totalSharedExpenses > 0
       ? (totalSharedExpenses * (partner2Percentage / 100)).toFixed(0)
       : "0"
-  }`;
+  }MMK`;
 
   // Update Settlement Summary
   const settlementSummary = document.getElementById("settlementSummary");
@@ -428,17 +413,17 @@ function updateUI() {
       settlementSummary.innerHTML = `
             <h4 class="fw-semibold mb-2">Settlement Needed</h4>
             <p class="text-muted">Partner 2 owes Partner 1</p>
-            <p class="fs-3 fw-bold text-danger">$${Math.abs(
+            <p class="fs-3 fw-bold text-danger">${Math.abs(
               partner1Balance
-            ).toFixed(2)}</p>
+            ).toFixed(2)}MMK</p>
           `;
     } else if (partner2Balance > 0) {
       settlementSummary.innerHTML = `
             <h4 class="fw-semibold mb-2">Settlement Needed</h4>
             <p class="text-muted">Partner 1 owes Partner 2</p>
-            <p class="fs-3 fw-bold text-danger">$${Math.abs(
+            <p class="fs-3 fw-bold text-danger">${Math.abs(
               partner2Balance
-            ).toFixed(2)}</p>
+            ).toFixed(2)}MMK</p>
           `;
     } else {
       settlementSummary.innerHTML = `
@@ -473,26 +458,28 @@ function updateUI() {
               <div class="d-flex justify-content-between align-items-center">
                 <div>
                   <div class="d-flex align-items-center gap-3 mb-2">
-                    <h3 class="fs-5 fw-semibold">${exp.description}</h3>
+                    <h4 class="fs-3 fw-semibold paidBy">${exp.paidBy}</h4>
+                    <div class="gap-1">
                     <span class="badge category-badge">${exp.category}</span>
                     ${
                       exp.location
                         ? `<span class="badge geo-badge"><i class="bi bi-geo-alt me-1"></i> Geo-tagged</span>`
                         : ""
-                    }
-                  </div>
-                  <div class="d-flex gap-3 text-muted small">
-                    <span><i class="bi bi-currency-dollar"></i> $${exp.amount.toFixed(
-                      2
-                    )}</span>
-                    <span><i class="bi bi-calendar"></i> ${new Date(
+                    }</div>
+                    <span class="text-muted small"><i class="bi bi-calendar"></i> ${new Date(
                       exp.date
                     ).toLocaleDateString()}</span>
-                    <span>Paid by: ${exp.paidBy}</span>
+
+                  </div>
+                  <div class="d-flex gap-3 ">
+                    <span class="amount"><i class="bi bi-cash fs-5 fw-bold"></i> ${exp.amount.toFixed(
+                      2
+                    )}MMK</span>
+    
                   </div>
                   ${
                     exp.location
-                      ? `<div class="text-danger small mt-1">📍 ${exp.location.name}, ${exp.location.address}</div>`
+                      ? `<div class="text-danger small mt-1">📍 ${exp.location.name}</div>`
                       : ""
                   }
                   ${
