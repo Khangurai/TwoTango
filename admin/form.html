@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin/User Authentication</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .info-panel {
+            flex: 1;
+            background: linear-gradient(to bottom right, #2c3e50, #4a6491);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .form-panel {
+            flex: 1;
+            padding: 40px;
+        }
+        
+        .info-panel h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #fdbb2d;
+            padding-bottom: 10px;
+        }
+        
+        .info-panel p {
+            margin: 15px 0;
+            line-height: 1.6;
+        }
+        
+        .features {
+            margin-top: 30px;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .feature i {
+            margin-right: 10px;
+            color: #fdbb2d;
+            font-size: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus, input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: block;
+            min-height: 20px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .role-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .role-info h4 {
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+        
+        .role-info p {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .password-container {
+            position: relative;
+        }
+        
+        .show-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #7f8c8d;
+            cursor: pointer;
+        }
+        
+        .dashboard {
+            display: none;
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .dashboard-title {
+            color: #2c3e50;
+        }
+        
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+        
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .card p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+        
+        .user-card {
+            border-top: 4px solid #3498db;
+        }
+        
+        .admin-card {
+            border-top: 4px solid #9b59b6;
+        }
+        
+        .stats-card {
+            border-top: 4px solid #2ecc71;
+        }
+        
+        .activity-card {
+            border-top: 4px solid #f39c12;
+        }
+        
+        .welcome-message {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        
+        .username {
+            color: #3498db;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .info-panel {
+                order: 2;
+            }
+            
+            .form-panel {
+                order: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="info-panel">
+            <h2>Admin & User Authentication</h2>
+            <p>Secure login system with role-based access control. Select your role to access the appropriate dashboard.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <i>✓</i>
+                    <span>User-friendly interface with clear validation</span>
+                </div>
+                <div class="feature">
+                    <i>✓</i>
+                    <span>Secure password handling</span>
+                </div>
+                <div class="feature">
+                    <i>✓</i>
+                    <span>Role-specific dashboard access</span>
+                </div>
+                <div class="feature">
+                    <i>✓</i>
+                    <span>Responsive design for all devices</span>
+                </div>
+            </div>
+            
+            <p style="margin-top: auto; font-style: italic;">"Security is not a product, but a process."</p>
+        </div>
+        
+        <div class="form-panel">
+            <h1>Account Login</h1>
+            <p class="subtitle">Select your role and enter your credentials</p>
+            
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="role">Select Role:</label>
+                    <select id="role" name="role" required>
+                        <option value="">--Select Role--</option>
+                        <option value="admin">Administrator</option>
+                        <option value="user">Standard User</option>
+                    </select>
+                </div>
+                
+                <div id="roleInfo" class="role-info hidden">
+                    <h4 id="roleTitle"></h4>
+                    <p id="roleDescription"></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required placeholder="Enter your username">
+                    <span class="error" id="usernameError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" required placeholder="Enter your password">
+                        <button type="button" class="show-password" id="togglePassword">👁️</button>
+                    </div>
+                    <span class="error" id="passwordError"></span>
+                </div>
+
+                <button type="submit" class="btn">Login</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- User Dashboard -->
+    <div id="userDashboard" class="dashboard">
+        <div class="dashboard-header">
+            <h2 class="dashboard-title">User Dashboard</h2>
+            <a href="#" class="logout-btn" id="userLogout">Logout</a>
+        </div>
+        
+        <div class="welcome-message">
+            Welcome back, <span id="userName" class="username"></span>! You're logged in as a Standard User.
+        </div>
+        
+        <div class="dashboard-content">
+            <div class="card user-card">
+                <h3>Profile Information</h3>
+                <p>View and edit your personal profile details, contact information, and preferences.</p>
+            </div>
+            
+            <div class="card stats-card">
+                <h3>Usage Statistics</h3>
+                <p>Track your account usage, activity history, and resource consumption metrics.</p>
+            </div>
+            
+            <div class="card activity-card">
+                <h3>Recent Activity</h3>
+                <p>Monitor your recent actions, login history, and system notifications.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Support Center</h3>
+                <p>Access our knowledge base, submit support tickets, or chat with our team.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Admin Dashboard -->
+    <div id="adminDashboard" class="dashboard">
+        <div class="dashboard-header">
+            <h2 class="dashboard-title">Admin Dashboard</h2>
+            <a href="#" class="logout-btn" id="adminLogout">Logout</a>
+        </div>
+        
+        <div class="welcome-message">
+            Welcome back, <span id="adminName" class="username"></span>! You're logged in as an Administrator.
+        </div>
+        
+        <div class="dashboard-content">
+            <div class="card admin-card">
+                <h3>User Management</h3>
+                <p>Manage user accounts, permissions, roles, and access controls across the system.</p>
+            </div>
+            
+            <div class="card stats-card">
+                <h3>System Analytics</h3>
+                <p>Monitor system performance, usage metrics, and application health in real-time.</p>
+            </div>
+            
+            <div class="card">
+                <h3>Configuration</h3>
+                <p>Configure system settings, modules, integrations, and security parameters.</p>
+            </div>
+            
+            <div class="card activity-card">
+                <h3>Audit Logs</h3>
+                <p>Review detailed audit trails of all user activities and system events.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('registrationForm');
+        const roleSelect = document.getElementById('role');
+        const roleInfo = document.getElementById('roleInfo');
+        const roleTitle = document.getElementById('roleTitle');
+        const roleDescription = document.getElementById('roleDescription');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+        const userDashboard = document.getElementById('userDashboard');
+        const adminDashboard = document.getElementById('adminDashboard');
+        const userName = document.getElementById('userName');
+        const adminName = document.getElementById('adminName');
+        const userLogout = document.getElementById('userLogout');
+        const adminLogout = document.getElementById('adminLogout');
+        
+        // Show role information when selected
+        roleSelect.addEventListener('change', () => {
+            const role = roleSelect.value;
+            
+            if (role === '') {
+                roleInfo.classList.add('hidden');
+                return;
+            }
+            
+            roleInfo.classList.remove('hidden');
+            
+            if (role === 'admin') {
+                roleTitle.textContent = 'Administrator';
+                roleDescription.textContent = 'Full system access with administrative privileges. Manage users, settings, and system configurations.';
+            } else if (role === 'user') {
+                roleTitle.textContent = 'Standard User';
+                roleDescription.textContent = 'Access to personal account features and standard application functionality.';
+            }
+        });
+        
+        // Toggle password visibility
+        togglePassword.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                togglePassword.textContent = '👁️';
+            } else {
+                passwordInput.type = 'password';
+                togglePassword.textContent = '👁️';
+            }
+        });
+        
+        // Form validation
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let isValid = true;
+
+            // Clear previous errors
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+            // Role validation
+            const role = roleSelect.value;
+            if (role === '') {
+                document.getElementById('usernameError').textContent = 'Please select a role';
+                isValid = false;
+            }
+
+            // Username validation
+            const username = document.getElementById('username').value;
+            if (username.length < 3) {
+                document.getElementById('usernameError').textContent = 
+                    'Username must be at least 3 characters';
+                isValid = false;
+            }
+
+            // Password validation
+            const password = document.getElementById('password').value;
+            if (password.length < 2) {
+                document.getElementById('passwordError').textContent = 
+                    'Password must be at least 6 characters';
+                isValid = false;
+            }
+
+            // Submit if valid
+            if (isValid) {
+                // Hide login form
+                document.querySelector('.container').style.display = 'none';
+                
+                // Show appropriate dashboard based on role
+                if (role === 'admin') {
+                    adminName.textContent = username;
+                    adminDashboard.style.display = 'block';
+                } else if (role === 'user') {
+                    userName.textContent = username;
+                    userDashboard.style.display = 'block';
+                }
+            }
+        });
+        
+        // Logout functionality
+        userLogout.addEventListener('click', (e) => {
+            e.preventDefault();
+            userDashboard.style.display = 'none';
+            document.querySelector('.container').style.display = 'flex';
+            form.reset();
+            roleInfo.classList.add('hidden');
+        });
+        
+        adminLogout.addEventListener('click', (e) => {
+            e.preventDefault();
+            adminDashboard.style.display = 'none';
+            document.querySelector('.container').style.display = 'flex';
+            form.reset();
+            roleInfo.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

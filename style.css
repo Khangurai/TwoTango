@@ -229,6 +229,9 @@ p {
   background-color: var(--rose-600);
   border-radius: 50%;
 }
+#transactions {
+  padding: 20px;
+}
 
 /* Map container size */
 #map_container {
@@ -280,6 +283,53 @@ p {
     box-shadow: 0 -1px 12px rgba(0, 0, 0, 0.05);
     align-items: center;
     justify-content: space-between;
+    z-index: 1001;
+  }
+
+  /* Navbar list full width and spaced for 5 icons */
+  .nav__list {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding-left: 0;
+    gap: 0; /* Remove gap so icons are evenly spaced */
+  }
+
+  .nav__menu {
+    background-color: #fff;
+    border-radius: 20px 20px 0 0;
+    padding-bottom: 30px;
+  }
+
+  .nav__link.active-link::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0.3rem;
+    width: 6px;
+    height: 6px;
+    background-color: var(--rose-600);
+    border-radius: 50%;
+    z-index: 2;
+    display: block;
+  }
+
+  .nav__link {
+    position: relative;
+    flex: 1 1 20%; /* 5 icons: each takes 20% */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+  }
+  .card {
+    background-color: var(--container-color);
+    border: 1px solid #ffe4e6;
+    border-radius: 10px;
+    width: 100%;
   }
   .custom-footer {
     position: fixed;
@@ -287,40 +337,6 @@ p {
     left: 0;
     width: 100%;
     z-index: 1000;
-  }
-
-  /* Navbar list full width and spaced */
-  .nav__list {
-    justify-content: space-around;
-    width: 100%;
-    padding-left: 15px;
-  }
-  .nav__menu {
-    background-color: #fff;
-    border-radius: 20px 20px 0 0;
-    padding-bottom: 30px;
-  }
-  .nav__link.active-link::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0.3rem; /* Changed from -0.5rem to 0.3rem to show the dot below the nav link */
-    width: 6px; /* Slightly larger for visibility */
-    height: 6px;
-    background-color: var(--rose-600);
-    border-radius: 50%;
-    z-index: 2;
-    display: block;
-  }
-  .nav__link {
-    position: relative; /* Ensure pseudo-element is positioned relative to link */
-  }
-  .card {
-    background-color: var(--container-color);
-    border: 1px solid #ffe4e6;
-    border-radius: 10px;
-    width: 100%;
   }
 }
 
@@ -535,7 +551,6 @@ p.text-muted.small {
   color: #fff;
 }
 @media (max-width: 500px) {
-
   .card.border-danger-subtle {
     padding: 0.75rem;
     border-radius: 0.75rem;

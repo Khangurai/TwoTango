@@ -55,16 +55,16 @@
                 <span class="nav__name">Home</span>
               </a>
             </li>
-            <!-- <li class="nav__item">
-              <a href="#" class="nav__link" data-target="features">
-                <i class="bi bi-info-circle-fill nav__icon"></i>
-                <span class="nav__name">Features</span>
-              </a>
-            </li> -->
             <li class="nav__item">
-              <a href="#" class="nav__link" data-target="expense">
-                <i class="bi bi-journal nav__icon"></i>
-                <span class="nav__name">Expense</span>
+              <a href="#" class="nav__link" data-target="transactions">
+                <i class="bi bi-receipt nav__icon"></i>
+                <span class="nav__name">Transactions</span>
+              </a>
+            </li>
+            <li class="nav__item">
+              <a href="#" class="nav__link" data-target="overview">
+                <i class="bi bi-graph-up-arrow nav__icon"></i>
+                <span class="nav__name">Overview</span>
               </a>
             </li>
             <li class="nav__item">
@@ -85,6 +85,8 @@
         <a class="btn btn-outline-primary nav__login d-md-block" href="#"
           >Login</a
         >
+        
+
       </nav>
     </header>
 
@@ -99,16 +101,15 @@
             love story deserves to be organized beautifully.
           </p>
           <div class="d-flex justify-content-center gap-3 mt-4">
-            <a href="#" class="btn btn-primary" data-target="expense"
+            <a href="#" class="btn btn-primary" data-target="transactions"
               >Track Expenses</a
             >
             <a href="#" class="btn btn-outline-primary mx-2" data-target="map"
               ><span class="saveBtn">Save Places</span></a
             >
-          </div>
         </div>
         <div class="container">
-          <div class="row g-4">
+          <div class="row g-4 py-5">
             <div class="col-12 col-md-6">
               <div class="card border-rose-100 p-4">
                 <span
@@ -248,148 +249,11 @@
         </div>
       </section>
 
-      <!-- features -->
-      <!-- <section id="features" class="content-section d-none">
+      <!-- transactions -->
+      <section id="transactions" class="content-section d-none">
         <div class="container">
-          <div class="mb-12">
-            <h2 class="text-4xl fw-bold mbb-4 gradient-title">
-              Built for Couples
-            </h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-              Everything you need to manage your shared life, designed with love
-              and attention to detail.
-            </p>
-          </div>
-
-          <div class="row g-4">
-            
-          </div>
-        </div>
-      </section> -->
-
-      <!-- expense -->
-      <section id="expense" class="content-section d-none">
-        <div class="container px-4 py-5">
-          <!-- Header -->
-          <div class="text-center mb-5">
-            <h2 class="display-5 gradient-title">Expense Tracker</h2>
-            <p class="text-muted">
-              Keep track of your shared expenses together
-            </p>
-          </div>
-
-          <!-- Summary Cards -->
-          <div class="row g-4 mb-5">
-            <div class="col-md-3">
-              <div class="card border-danger-subtle">
-                <div class="card-body">
-                  <h5 class="card-title d-flex align-items-center">
-                    <i class="bi bi-currency-dollar text-success me-2"></i>
-                    Total Expenses
-                  </h5>
-                  <h3 class="card-text text-success" id="totalExpenses">
-                    0MMK
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="card border-danger-subtle">
-                <div class="card-body">
-                  <h5 class="card-title d-flex align-items-center">
-                    <i class="bi bi-calendar text-primary me-2"></i> This Month
-                  </h5>
-                  <h3 class="card-text text-primary" id="monthExpenses">
-                    0MMK
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="card border-danger-subtle">
-                <div class="card-body">
-                  <h5 class="card-title d-flex align-items-center">
-                    <i class="bi bi-tag text-purple me-2"></i> Categories
-                  </h5>
-                  <h3 class="card-text text-purple" id="categoryCount">0</h3>
-                </div>
-              </div>
-            </div>
-            <a href="#" data-target="map" id="geoTaggedLink" class="col-md-3">
-              <div class="card border-danger-subtle">
-                <div class="card-body">
-                  <h5 class="card-title d-flex align-items-center">
-                    <i class="bi bi-geo-alt text-danger me-2"></i> Geo-Tagged
-                    <span id="geoTaggedLink" class="fs-6 text-rose-600"
-                      >(view in map)</span
-                    >
-                  </h5>
-                  <h3 class="card-text text-danger" id="geoTaggedCount">0</h3>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <!-- Partner Balance Card -->
-          <div class="card mb-5 border-danger-subtle partnerBalanceCard">
-            <div class="card-body">
-              <h5 class="card-title d-flex align-items-center">
-                <i class="bi bi-people text-rose me-2"></i> Partner Balance
-                (50/50 Split)
-              </h5>
-              <p class="card-text text-muted">
-                See who paid what and settlement details
-              </p>
-              <div class="p-4 bg-white border rounded partnerBalance">
-                <!-- Partner 1 -->
-                <div
-                  class="d-flex justify-content-between align-items-center mb-4"
-                >
-                  <div class="d-flex align-items-center gap-3">
-                    <div class="partner1-circle">P1</div>
-                    <div>
-                      <h3 class="fs-5 fw-semibold">Partner 1</h3>
-                      <p class="text-success fw-medium fs-5" id="partner1Paid">
-                        $0
-                      </p>
-                    </div>
-                  </div>
-                  <div class="text-end">
-                    <div class="fs-3 fw-bold" id="partner1Percentage">50%</div>
-                    <div class="text-muted" id="partner1Share">$0</div>
-                  </div>
-                </div>
-                <hr />
-                <!-- Partner 2 -->
-                <div
-                  class="d-flex justify-content-between align-items-center mb-4"
-                >
-                  <div class="d-flex align-items-center gap-3">
-                    <div class="partner2-circle">P2</div>
-                    <div>
-                      <h3 class="fs-5 fw-semibold">Partner 2</h3>
-                      <p class="text-warning fw-medium fs-5" id="partner2Paid">
-                        $0
-                      </p>
-                    </div>
-                  </div>
-                  <div class="text-end">
-                    <div class="fs-3 fw-bold" id="partner2Percentage">50%</div>
-                    <div class="text-muted" id="partner2Share">$0</div>
-                  </div>
-                </div>
-              </div>
-              <!-- Settlement Summary -->
-              <div
-                class="mt-4 p-3 settlement-card rounded text-center"
-                id="settlementSummary"
-              >
-                <h4 class="fw-semibold mb-2">Settlement Needed</h4>
-                <p class="text-muted">Everything is settled! 💕</p>
-              </div>
-            </div>
-          </div>
-
+          <h3 class="display-5 gradient-title">Expense Tracker</h3>
+          <p class="text-muted">Keep track of your shared expenses together</p>
           <!-- Add Expense Button -->
           <div class="mb-4">
             <button class="btn gradient-button" id="addExpenseBtn">
@@ -423,13 +287,13 @@
                       <option value="" disabled selected>
                         Select category
                       </option>
-                      <option value="Food & Dining">Food & Dining</option>
-                      <option value="Travel">Travel</option>
-                      <option value="Entertainment">Entertainment</option>
-                      <option value="Shopping">Shopping</option>
-                      <option value="Utilities">Utilities</option>
-                      <option value="Health">Health</option>
-                      <option value="Other">Other</option>
+                      <option value="Food & Dining">🍽️ Food & Dining</option>
+                      <option value="Travel">✈️ Travel</option>
+                      <option value="Entertainment">🎮 Entertainment</option>
+                      <option value="Shopping">🛍️ Shopping</option>
+                      <option value="Utilities">💡 Utilities</option>
+                      <option value="Health">🩺 Health</option>
+                      <option value="Other">🔖 Other</option>
                     </select>
                   </div>
                   <div class="col-md-4">
@@ -572,9 +436,12 @@
             </div>
           </div>
 
+          <div class="fw-bold">
+            <h4 class="display-2 gradient-title fs-2">Expense List</h4>
+          </div>
+
           <!-- Expenses List -->
           <div id="expensesList"></div>
-          
 
           <!-- Toast Container -->
           <div class="toast-container position-fixed bottom-0 end-0 p-3">
@@ -599,6 +466,132 @@
           </div>
         </div>
       </section>
+
+      <!-- overview -->
+      <section id="overview" class="content-section d-none">
+        <div class="container px-4 py-5">
+          <!-- Header -->
+          <div class="text-center mb-5">
+            <h2 class="display-5 gradient-title">Expense Tracker</h2>
+            <p class="text-muted">
+              Keep track of your shared expenses together
+            </p>
+          </div>
+
+          <!-- Summary Cards -->
+          <div class="row g-4 mb-5">
+            <div class="col-md-3">
+              <div class="card border-danger-subtle">
+                <div class="card-body">
+                  <h5 class="card-title d-flex align-items-center">
+                    <i class="bi bi-currency-dollar text-success me-2"></i>
+                    Total Expenses
+                  </h5>
+                  <h3 class="card-text text-success" id="totalExpenses">
+                    0MMK
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card border-danger-subtle">
+                <div class="card-body">
+                  <h5 class="card-title d-flex align-items-center">
+                    <i class="bi bi-calendar text-primary me-2"></i> This Month
+                  </h5>
+                  <h3 class="card-text text-primary" id="monthExpenses">
+                    0MMK
+                  </h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card border-danger-subtle">
+                <div class="card-body">
+                  <h5 class="card-title d-flex align-items-center">
+                    <i class="bi bi-tag text-purple me-2"></i> Categories
+                  </h5>
+                  <h3 class="card-text text-purple" id="categoryCount">0</h3>
+                </div>
+              </div>
+            </div>
+            <a href="#" data-target="map" id="geoTaggedLink" class="col-md-3">
+              <div class="card border-danger-subtle">
+                <div class="card-body">
+                  <h5 class="card-title d-flex align-items-center">
+                    <i class="bi bi-geo-alt text-danger me-2"></i> Geo-Tagged
+                    <span id="geoTaggedLink" class="fs-6 text-rose-600"
+                      >(view in map)</span
+                    >
+                  </h5>
+                  <h3 class="card-text text-danger" id="geoTaggedCount">0</h3>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- Partner Balance Card -->
+          <div class="card mb-5 border-danger-subtle partnerBalanceCard">
+            <div class="card-body">
+              <h5 class="card-title d-flex align-items-center">
+                <i class="bi bi-people text-rose me-2"></i> Partner Balance
+                (50/50 Split)
+              </h5>
+              <p class="card-text text-muted">
+                See who paid what and settlement details
+              </p>
+              <div class="p-4 bg-white border rounded partnerBalance">
+                <!-- Partner 1 -->
+                <div
+                  class="d-flex justify-content-between align-items-center mb-4"
+                >
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="partner1-circle">P1</div>
+                    <div>
+                      <h3 class="fs-5 fw-semibold">Partner 1</h3>
+                      <p class="text-success fw-medium fs-5" id="partner1Paid">
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div class="text-end">
+                    <div class="fs-3 fw-bold" id="partner1Percentage">50%</div>
+                    <div class="text-muted" id="partner1Share">$0</div>
+                  </div>
+                </div>
+                <hr />
+                <!-- Partner 2 -->
+                <div
+                  class="d-flex justify-content-between align-items-center mb-4"
+                >
+                  <div class="d-flex align-items-center gap-3">
+                    <div class="partner2-circle">P2</div>
+                    <div>
+                      <h3 class="fs-5 fw-semibold">Partner 2</h3>
+                      <p class="text-warning fw-medium fs-5" id="partner2Paid">
+                        $0
+                      </p>
+                    </div>
+                  </div>
+                  <div class="text-end">
+                    <div class="fs-3 fw-bold" id="partner2Percentage">50%</div>
+                    <div class="text-muted" id="partner2Share">$0</div>
+                  </div>
+                </div>
+              </div>
+              <!-- Settlement Summary -->
+              <div
+                class="mt-4 p-3 settlement-card rounded text-center"
+                id="settlementSummary"
+              >
+                <h4 class="fw-semibold mb-2">Settlement Needed</h4>
+                <p class="text-muted">Everything is settled! 💕</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- map -->
       <section id="map" class="content-section d-none">
         <div class="container" id="map_section">
@@ -609,15 +602,11 @@
             type="text"
             placeholder="Search location..."
           />
-          <!-- <input
-            id="searchInput"
-            is="gmpx-place-autocomplete"
-            class="form-control mb-3"
-            placeholder="Search location..."
-          /> -->
+
           <div id="mapMap" style="height: 400px"></div>
         </div>
       </section>
+
       <!-- music -->
       <section id="music" class="content-section d-none">
         <div class="container" id="music_section">
