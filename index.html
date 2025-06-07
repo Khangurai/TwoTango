@@ -550,7 +550,7 @@
         <div class="container px-4 py-5">
           <!-- Header -->
           <div class="text-center mb-5">
-            <h2 class="display-5 gradient-title">Expense Tracker</h2>
+            <h2 class="display-5 gradient-title">Overview</h2>
             <p class="text-muted">
               Keep track of your shared expenses together
             </p>
@@ -672,7 +672,7 @@
 
       <!-- map -->
       <section id="map" class="content-section d-none">
-        <div class="container" id="map_section">
+        <!-- <div class="container" id="map_section">
           <h3 class="text-rose-600 fw-bold">Search Place & Show on Map</h3>
           <input
             id="searchInput"
@@ -682,6 +682,238 @@
           />
 
           <div id="mapMap" style="height: 400px"></div>
+        </div> -->
+        <div class="container px-4 py-5">
+          <!-- Header -->
+          <div class="text-center mb-5">
+            <h2 class="display-5 gradient-title">Your Love Map</h2>
+            <p class="text-muted">
+              Save special places and see where you spent money together
+            </p>
+          </div>
+
+          <!-- Statistics -->
+          <div class="row g-4 mb-5">
+            <div class="col-md-4">
+              <div class="card border-danger-subtle">
+                <div
+                  class="card-body pt-4 d-flex align-items-center justify-content-between"
+                >
+                  <div>
+                    <p class="text-muted small">Special Places</p>
+                    <p class="fs-3 fw-bold text-danger" id="placeCount">0</p>
+                  </div>
+                  <i
+                    class="bi bi-heart text-danger-400"
+                    style="font-size: 2rem"
+                  ></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card border-danger-subtle">
+                <div
+                  class="card-body pt-4 d-flex align-items-center justify-content-between"
+                >
+                  <div>
+                    <p class="text-muted small">Geo-Tagged Expenses</p>
+                    <p class="fs-3 fw-bold text-success" id="geoTaggedCount">
+                      0
+                    </p>
+                  </div>
+                  <i
+                    class="bi bi-currency-dollar text-success-400"
+                    style="font-size: 2rem"
+                  ></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card border-danger-subtle">
+                <div
+                  class="card-body pt-4 d-flex align-items-center justify-content-between"
+                >
+                  <div>
+                    <p class="text-muted small">Total Mapped Spending</p>
+                    <p class="fs-3 fw-bold text-primary" id="totalSpending">
+                      $0.00
+                    </p>
+                  </div>
+                  <i
+                    class="bi bi-geo-alt text-primary-400"
+                    style="font-size: 2rem"
+                  ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Map Controls -->
+          <div class="card mb-5 border-danger-subtle">
+            <div class="card-body">
+              <h5
+                class="card-title d-flex align-items-center justify-content-between"
+              >
+                <span class="d-flex align-items-center">
+                  <i class="bi bi-heart text-danger me-2"></i> Interactive Map
+                </span>
+                <div class="d-flex align-items-center gap-3">
+                  <select id="dateFilter" class="form-select form-select-sm">
+                    <option value="all">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="this-week">This Week</option>
+                    <option value="last-7-days">Last 7 Days</option>
+                    <option value="this-month">This Month</option>
+                    <option value="last-30-days">Last 30 Days</option>
+                    <option value="this-year">This Year</option>
+                    <option value="custom">Custom Range</option>
+                  </select>
+
+                  <!-- <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="showPlaces" checked>
+              <label class="form-check-label small" for="showPlaces">💝 Places</label>
+            </div> -->
+                  <!-- <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="showExpenses"
+                  checked
+                />
+                <label class="form-check-label small" for="showExpenses"
+                  >💰 Expenses</label
+                >
+              </div> -->
+                  <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-funnel text-muted"></i>
+                    <select
+                      class="form-select form-select-sm w-auto"
+                      id="categoryFilter"
+                    >
+                      <option value="all">All Categories</option>
+                      <option value="First Date">First Date</option>
+                      <option value="Restaurant">Restaurant</option>
+                      <option value="Vacation">Vacation</option>
+                      <option value="Special Moment">Special Moment</option>
+                      <option value="Home">Home</option>
+                      <option value="Anniversary">Anniversary</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div class="button">
+                    <button id="clearBtn" class="btn gradient-button">
+                      Clear
+                    </button>
+                  </div>
+                </div>
+              </h5>
+              <p class="card-text text-muted small">
+                Search for a place or click on the map to add a new place. 💝 =
+                Special places, 💰 = Expenses
+              </p>
+              <input
+                id="searchInput"
+                class="form-control mb-3"
+                type="text"
+                placeholder="Search location..."
+              />
+              <div id="map"></div>
+            </div>
+          </div>
+
+          <!-- Add Place Button -->
+          <!-- <div class="mb-4">
+      <button class="btn gradient-button" data-bs-toggle="modal" data-bs-target="#placeModal">
+        <i class="bi bi-plus me-1"></i> Add Place Manually
+      </button>
+    </div> -->
+
+          <!-- Place Modal -->
+          <!-- <div class="modal fade" id="placeModal" tabindex="-1" aria-labelledby="placeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="placeModalLabel">Add New Place</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="placeForm">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="name" class="form-label">Place Name *</label>
+                  <input type="text" class="form-control" id="name" placeholder="e.g., Our favorite café" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="type" class="form-label">Type *</label>
+                  <select class="form-select" id="type" required>
+                    <option value="" disabled selected>Select type</option>
+                    <option value="First Date">First Date</option>
+                    <option value="Restaurant">Restaurant</option>
+                    <option value="Vacation">Vacation</option>
+                    <option value="Special Moment">Special Moment</option>
+                    <option value="Home">Home</option>
+                    <option value="Anniversary">Anniversary</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label for="lat" class="form-label">Latitude *</label>
+                  <input type="text" class="form-control" id="lat" placeholder="16.845" required>
+                </div>
+                <div class="col-md-4">
+                  <label for="lng" class="form-label">Longitude *</label>
+                  <input type="text" class="form-control" id="lng" placeholder="96.173" required>
+                </div>
+                <div class="col-md-4">
+                  <label for="date" class="form-label">Date</label>
+                  <input type="date" class="form-control" id="date">
+                </div>
+                <div class="col-12">
+                  <label for="notes" class="form-label">Notes</label>
+                  <textarea class="form-control" id="notes" rows="3" placeholder="What makes this place special to you both..."></textarea>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+              <i class="bi bi-x me-1"></i> Cancel
+            </button>
+            <button type="submit" class="btn gradient-button" id="submitPlace">
+              <i class="bi bi-plus me-1"></i> Add Place
+            </button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+          <!-- Places List -->
+          <!-- <div class="mb-4">
+      <h3 class="fs-4 fw-semibold mb-4" id="placesTitle">Your Special Places (0)</h3>
+      <div id="placesList"></div>
+    </div> -->
+
+          <!-- Toast Container -->
+          <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div
+              id="toast"
+              class="toast"
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true"
+            >
+              <div class="toast-header">
+                <strong class="me-auto">Notification</strong>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="toast"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="toast-body"></div>
+            </div>
+          </div>
         </div>
       </section>
 
