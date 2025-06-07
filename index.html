@@ -50,8 +50,13 @@
         <div class="nav__menu" id="nav-menu">
           <ul class="nav__list mx-auto">
             <li class="nav__item">
-              <a href="#" class="nav__link active-link" data-target="home">
-                <i class="bi bi-house-door nav__icon"></i>
+              <a
+                href="#"
+                class="nav__link active-link"
+                data-target="home"
+                id="homeButton"
+              >
+                <i class="bi bi-house-door nav__icon" href="index.html"></i>
                 <span class="nav__name">Home</span>
               </a>
             </li>
@@ -82,13 +87,72 @@
           </ul>
         </div>
 
-        <a class="btn btn-outline-primary nav__login d-md-block" href="#"
+        <!-- <a class="btn btn-outline-primary nav__login d-md-block" href="#"
           >Login</a
+        > -->
+        <button
+          type="button"
+          class="btn btn-outline-primary nav__login d-md-block"
+          data-bs-toggle="modal"
+          data-bs-target="#LoginModal"
+          data-bs-whatever=""
         >
-        
-
+          Login
+        </button>
       </nav>
     </header>
+    <!-- Login Modal -->
+    <div
+      class="modal fade"
+      id="LoginModal"
+      tabindex="-1"
+      aria-labelledby="LoginModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="LoginModalLabel">Login</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="loginForm">
+              <div class="mb-3">
+                <label for="LoginUsername" class="col-form-label"
+                  >username:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="LoginUsername"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="LoginPassword" class="col-form-label"
+                  >password:</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="LoginPassword"
+                  required
+                />
+              </div>
+              <!-- Error message will be inserted here by JavaScript -->
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- Sections -->
     <main>
@@ -101,22 +165,26 @@
             love story deserves to be organized beautifully.
           </p>
           <div class="d-flex justify-content-center gap-3 mt-4">
-            <a href="#" class="btn btn-primary" data-target="transactions"
-              >Track Expenses</a
-            >
-            <a href="#" class="btn btn-outline-primary mx-2" data-target="map"
-              ><span class="saveBtn">Save Places</span></a
-            >
+            <a href="#" class="btn btn-primary" data-target="transactions">
+              Track Expenses
+            </a>
+            <a href="#" class="btn btn-outline-primary mx-2" data-target="map">
+              <span class="saveBtn">Save Places</span>
+            </a>
+          </div>
         </div>
+
         <div class="container">
           <div class="row g-4 py-5">
+            <!-- Card 1: Smart Expense Tracking -->
             <div class="col-12 col-md-6">
               <div class="card border-rose-100 p-4">
                 <span
                   class="material-icons icon-rose"
                   style="color: var(--rose-500); font-size: 2rem"
-                  >calculate</span
                 >
+                  calculate
+                </span>
                 <div class="text-start">
                   <h3 class="text-gray-800">Smart Expense Tracking</h3>
                   <p class="text-gray-400">
@@ -126,13 +194,16 @@
                 </div>
               </div>
             </div>
+
+            <!-- Card 2: Memorable Places -->
             <div class="col-12 col-md-6">
               <div class="card border-rose-100 p-4">
                 <span
                   class="material-icons icon-rose"
                   style="color: var(--rose-500); font-size: 2rem"
-                  >location_on</span
                 >
+                  location_on
+                </span>
                 <h3 class="text-gray-800">Memorable Places</h3>
                 <p class="text-gray-400">
                   Save special locations with photos and memories. Create your
@@ -140,14 +211,16 @@
                 </p>
               </div>
             </div>
-            <!-- Card 1: Private & Secure -->
+
+            <!-- Card 3: Private & Secure -->
             <div class="col-12 col-md-6">
               <div class="card border-rose-100 p-4">
                 <span
                   class="material-icons icon-rose"
                   style="color: var(--rose-500); font-size: 2rem"
-                  >lock</span
                 >
+                  lock
+                </span>
                 <div class="text-start">
                   <h3 class="text-gray-800">Private & Secure</h3>
                   <p class="text-gray-400">
@@ -158,14 +231,15 @@
               </div>
             </div>
 
-            <!-- Card 2: Works Offline -->
+            <!-- Card 4: Works Offline -->
             <div class="col-12 col-md-6">
               <div class="card border-rose-100 p-4">
                 <span
                   class="material-icons icon-rose"
                   style="color: var(--rose-500); font-size: 2rem"
-                  >smartphone</span
                 >
+                  smartphone
+                </span>
                 <div class="text-start">
                   <h3 class="text-gray-800">Works Offline</h3>
                   <p class="text-gray-400">
@@ -175,14 +249,15 @@
               </div>
             </div>
 
-            <!-- Card 3: Beautiful Design -->
+            <!-- Card 5: Beautiful Design -->
             <div class="col-12 col-md-6">
               <div class="card border-rose-100 p-4">
                 <span
                   class="material-icons icon-rose"
                   style="color: var(--rose-500); font-size: 2rem"
-                  >star</span
                 >
+                  star
+                </span>
                 <div class="text-start">
                   <h3 class="text-gray-800">Beautiful Design</h3>
                   <p class="text-gray-400">
@@ -193,14 +268,15 @@
               </div>
             </div>
 
-            <!-- Card 4: Easy Expense Splitting -->
+            <!-- Card 6: Easy Expense Splitting -->
             <div class="col-12 col-md-6">
               <div class="card border-rose-100 p-4">
                 <span
                   class="material-icons icon-rose"
                   style="color: var(--rose-500); font-size: 2rem"
-                  >attach_money</span
                 >
+                  attach_money
+                </span>
                 <div class="text-start">
                   <h3 class="text-gray-800">Easy Expense Splitting</h3>
                   <p class="text-gray-400">
@@ -211,14 +287,15 @@
               </div>
             </div>
 
-            <!-- Card 5: Memory Mapping -->
+            <!-- Card 7: Memory Mapping -->
             <div class="col-12 col-md-6">
               <div class="card border-rose-100 p-4">
                 <span
                   class="material-icons icon-rose"
                   style="color: var(--rose-500); font-size: 2rem"
-                  >map</span
                 >
+                  map
+                </span>
                 <div class="text-start">
                   <h3 class="text-gray-800">Memory Mapping</h3>
                   <p class="text-gray-400">
@@ -229,14 +306,15 @@
               </div>
             </div>
 
-            <!-- Card 6: No Subscriptions -->
+            <!-- Card 8: No Subscriptions -->
             <div class="col-12 col-md-6">
               <div class="card border-rose-100 p-4">
                 <span
                   class="material-icons icon-rose"
                   style="color: var(--rose-500); font-size: 2rem"
-                  >favorite</span
                 >
+                  favorite
+                </span>
                 <div class="text-start">
                   <h3 class="text-gray-800">No Subscriptions</h3>
                   <p class="text-gray-400">
@@ -723,5 +801,50 @@
         }
       });
     </script> -->
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Handle login form submission
+        const loginForm = document.getElementById("loginForm");
+        if (loginForm) {
+          // Create error message element
+          const errorDiv = document.createElement("div");
+          errorDiv.className = "alert alert-danger mt-3 d-none";
+          errorDiv.id = "loginError";
+          loginForm.appendChild(errorDiv);
+
+          loginForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById("LoginUsername").value;
+            const password = document.getElementById("LoginPassword").value;
+            const errorElement = document.getElementById("loginError");
+
+            // Clear previous errors
+            errorElement.classList.add("d-none");
+            errorElement.textContent = "";
+
+            // Simple authentication
+            if (username === "admin" && password === "admin") {
+              // Redirect to admin dashboard
+              window.location.href = "admin/index.html";
+            } else if (username === "user" && password === "user") {
+              // Redirect to user dashboard
+              window.location.href = "user-dashboard.html";
+            } else {
+              // Show error in modal without closing it
+              errorElement.textContent =
+                "Invalid credentials. Try admin/admin or user/user";
+              errorElement.classList.remove("d-none");
+
+              // Focus back on username field
+              document.getElementById("username").focus();
+
+              // Don't close the modal - removed the modal.hide() line
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>
