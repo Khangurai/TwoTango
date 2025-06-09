@@ -1,0 +1,70 @@
+/* Features Tab */
+#features {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+/* Gradient Title */
+.gradient-title {
+  background: linear-gradient(to right, var(--rose-500), var(--pink-500));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  font-size: 3rem;
+}
+
+/* Map Containers */
+#map_container {
+  height: 400px;
+  width: 100%;
+}
+
+#map_section {
+  padding: 50px;
+}
+
+#mainMap,
+#expenseMap {
+  height: 500px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+#mapContainer {
+  min-width: 300px;
+}
+
+/* Material Icons */
+.material-icons {
+  vertical-align: middle;
+}
+
+/* Transactions Section */
+#transactions {
+  padding: 20px;
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .stats {
+    flex-direction: column;
+  }
+}
+
+/* Loading Animation */
+.loading {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

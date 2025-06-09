@@ -1,0 +1,89 @@
+/* Import Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
+
+/* Root variables for colors, font sizes, z-index, etc. */
+:root {
+  --rose-500: #f43f5e;
+  --rose-600: #e11d48;
+  --pink-300: #fda4af;
+  --pink-500: #ec4899;
+  --pink-600: #db2777;
+  --orange-400: #fb923c;
+  --header-height: 4rem;
+  --h1-font-size: 1.5rem;
+  --normal-font-size: 0.938rem;
+  --tiny-font-size: 0.625rem;
+  --z-tooltip: 10;
+  --z-fixed: 100;
+  --container-color: rgba(255, 255, 255, 0.8);
+  --title-color: #1c1c1e;
+}
+
+/* Reset and base font family */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font-family: "Open Sans", "Montserrat", "Poppins", sans-serif;
+}
+
+/* Body styles: margin for header, background gradient, font */
+body {
+  margin-top: var(--header-height);
+  font-family: "Open Sans", sans-serif;
+  font-size: var(--normal-font-size);
+  background: linear-gradient(135deg, #fdf2f8 0%, #ffe4e6 50%, #fff7ed 100%);
+  min-height: 100vh;
+  padding-bottom: 150px; /* space for mobile nav */
+}
+
+/* Remove list and link default styles */
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* Headings and paragraphs color */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: #1f2937;
+}
+
+/* Utility text color classes */
+.text-gray-600 {
+  color: #4b5563 !important;
+}
+
+.text-rose-600 {
+  color: var(--rose-600);
+}
+
+.text-gray-400 {
+  color: #9ca3af !important;
+}
+
+.text-gray-800 {
+  color: #1f2937 !important;
+}
+
+/* Title styles */
+#title {
+  color: var(--rose-500);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 4rem;
+}

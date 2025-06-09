@@ -1,0 +1,232 @@
+/* Header/navbar styles */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: 0.4s;
+  z-index: var(--z-fixed);
+}
+
+/* Navbar container layout */
+.nav_container {
+  height: var(--header-height);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5rem;
+  background-color: #fff;
+}
+
+/* Logo styles */
+.nav__logo {
+  color: var(--rose-500);
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.5rem;
+}
+
+/* Navbar menu layout */
+.nav__menu {
+  flex: 1;
+  height: auto;
+  padding: 40px 0 20px 0;
+}
+
+/* Navbar list layout */
+.nav__list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  width: auto;
+}
+
+/* Navbar link styles */
+.nav__link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 4px;
+  color: var(--title-color);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: background 0.2s, color 0.2s;
+}
+
+/* Navbar link hover effect */
+.nav__link:hover {
+  color: var(--rose-600);
+  background-color: #fac5c8;
+}
+
+/* Navbar icon size */
+.nav__icon {
+  font-size: 1.2rem;
+}
+
+/* Navbar name font size */
+.nav__name {
+  font-size: var(--tiny-font-size);
+}
+
+/* Active link styles */
+.nav__link.active-link {
+  position: relative;
+  color: var(--rose-600);
+  background-color: #f7bbbf;
+}
+
+/* Active link indicator dot */
+.nav__link.active-link::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -0.5rem;
+  width: 4px;
+  height: 4px;
+  background-color: var(--rose-600);
+  border-radius: 50%;
+}
+
+/* Fixed Footer */
+.footer {
+  position: fixed;
+  bottom: 70px; /* space for mobile nav */
+  width: 100%;
+  background: #f8f9fa;
+  text-align: center;
+  padding: 0.8rem 0;
+  font-size: 0.85rem;
+  color: #666;
+  z-index: 998;
+  border-top: 1px solid #ddd;
+}
+
+/* Custom Footer */
+.custom-footer {
+  font-family: "Open Sans", Arial, sans-serif;
+  color: #6c757d;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.custom-footer .text-rose-600 {
+  color: var(--rose-600) !important;
+}
+
+.custom-footer .footer-icon i {
+  font-size: 1.5rem;
+  transition: color 0.2s;
+  vertical-align: middle;
+}
+
+.custom-footer .footer-icon:hover i {
+  color: var(--rose-600);
+}
+
+/* Mobile Responsive Navigation */
+@media screen and (max-width: 500px) {
+  .nav__menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 4rem;
+    background-color: var(--container-color);
+    box-shadow: 0 -1px 12px rgba(0, 0, 0, 0.05);
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1001;
+    background-color: #fff;
+    border-radius: 20px 20px 0 0;
+    padding-bottom: 30px;
+  }
+
+  .nav__list {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding-left: 0;
+    gap: 0;
+  }
+
+  .nav__link {
+    position: relative;
+    flex: 1 1 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .nav__link.active-link::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0.3rem;
+    width: 6px;
+    height: 6px;
+    background-color: var(--rose-600);
+    border-radius: 50%;
+    z-index: 2;
+    display: block;
+  }
+
+  .custom-footer {
+    position: static;
+    bottom: auto;
+    left: auto;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .custom-footer .text-start {
+    text-align: left !important;
+  }
+
+  .custom-footer .text-end {
+    text-align: right !important;
+  }
+
+  .custom-footer .footer-icon {
+    margin-right: 1rem !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+/* Desktop Navigation */
+@media screen and (min-width: 500px) {
+  .nav__link {
+    flex-direction: row;
+    align-items: center;
+    column-gap: 0.5rem;
+  }
+
+  .nav__icon {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .nav__name {
+    font-size: var(--normal-font-size);
+  }
+
+  .active-link::before {
+    bottom: 1.75rem;
+  }
+}

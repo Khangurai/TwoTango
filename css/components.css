@@ -1,0 +1,207 @@
+/* Card component styles */
+.card {
+  background-color: var(--container-color);
+  border: 1px solid #ffe4e6;
+  border-radius: 10px;
+}
+
+/* Expenses card */
+.card.border-danger-subtle {
+  border: 1px solid #f5c2c7;
+  background-color: #fff5f5;
+  transition: transform 0.2s ease;
+}
+
+.card.border-danger-subtle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.1);
+}
+
+/* PaidBy heading */
+.paidBy {
+  color: var(--pink-500);
+  font-size: 1.1rem;
+}
+
+/* Category badge */
+.badge.category-badge {
+  background-color: #f7d6e0;
+  color: var(--rose-600);
+  font-weight: 600;
+}
+
+/* Geo-tagged badge */
+.badge.geo-badge {
+  background-color: #fee2e2;
+  color: var(--rose-600);
+  font-weight: 600;
+}
+
+/* Amount text */
+.card span .bi-cash {
+  color: var(--pink-500);
+}
+
+.amount {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: var(--rose-600);
+}
+
+/* Location text */
+.text-danger.small.mt杦
+
+/* System: Notes text */
+p.text-muted.small {
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  color: #6c757d;
+}
+
+/* Summary Card */
+.summary-card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.summary-card h3 {
+  margin-top: 0;
+  color: var(--rose-500);
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+/* Expense List */
+.expense-list {
+  margin-top: 20px;
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.expense-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.expense-item:hover {
+  background-color: #f9f9f9;
+}
+
+/* Partner Circles */
+.partner1-circle {
+  background: linear-gradient(
+    to bottom right,
+    var(--rose-500),
+    var(--pink-500)
+  );
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.partner2-circle {
+  background: linear-gradient(
+    to bottom right,
+    var(--pink-500),
+    var(--rose-500)
+  );
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+/* Settlement Card */
+.settlement-card {
+  background: linear-gradient(to right, #fff1f2, #fce7f3);
+  border: 1px solid #fecdd3;
+}
+
+/* Stats */
+.stat-card {
+  flex: 1;
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--rose-500);
+  margin: 5px 0;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Mobile Responsive Components */
+@media (max-width: 500px) {
+  .card {
+    width: 100%;
+  }
+
+  .card.border-danger-subtle {
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+  }
+
+  .paidBy {
+    font-size: 1.25rem;
+  }
+
+  .card .fs-3 {
+    font-size: 1.25rem;
+  }
+
+  .badge.category-badge,
+  .badge.geo-badge {
+    font-size: 0.7rem;
+    padding: 0.25em 0.5em;
+  }
+
+  .amount {
+    font-size: 1.3rem;
+  }
+
+  .text-muted.small,
+  .text-danger.small {
+    font-size: 0.75rem;
+  }
+}
+
+/* Alert for login errors */
+.alert-danger {
+  background-color: var(--rose-600);
+  color: white;
+  border-color: var(--rose-500);
+}
+
+/* Visualizer bars */
+.visualizer-bar {
+  background: linear-gradient(to top, var(--rose-500), var(--pink-500));
+}

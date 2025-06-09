@@ -1,0 +1,136 @@
+/* Primary button styles */
+.btn-primary {
+  background: linear-gradient(
+    to right,
+    var(--rose-500),
+    var(--pink-500),
+    var(--orange-400)
+  );
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+/* Primary button hover effect */
+.btn-primary:hover {
+  background: linear-gradient(to right, var(--rose-600), var(--pink-600));
+}
+
+/* Outline primary button styles */
+.btn-outline-primary {
+  color: var(--rose-500);
+  border-color: var(--rose-500);
+  padding: 4px 6px !important;
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+/* Outline primary button hover effect */
+.btn-outline-primary:hover {
+  color: white;
+  background: linear-gradient(to right, var(--rose-600), var(--pink-600));
+  border-color: var(--rose-600);
+}
+
+/* Gradient button */
+.gradient-button {
+  background: linear-gradient(to right, var(--rose-500), var(--pink-500));
+  border: none;
+  color: white;
+  border-radius: 4px;
+}
+
+.gradient-button:hover {
+  background: linear-gradient(to right, var(--rose-600), var(--pink-600));
+}
+
+/* Location button styling */
+.location-button {
+  position: absolute;
+  right: 12px;
+  bottom: 120px;
+  z-index: 1000;
+  background: #ffffff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.location-button:hover {
+  background-color: var(--rose-500);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+}
+
+.location-button:active {
+  background-color: var(--rose-600);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+  transform: scale(0.95);
+}
+
+.location-icon {
+  width: 24px;
+  height: 24px;
+  fill: var(--title-color);
+  transition: fill 0.3s;
+}
+
+.location-button:hover .location-icon {
+  fill: white;
+}
+
+/* Export and Load Sample Buttons */
+.export-btn {
+  background: linear-gradient(to right, var(--pink-500), var(--rose-500));
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+.export-btn:hover {
+  background: linear-gradient(to right, var(--pink-600), var(--rose-600));
+}
+
+.load-sample-btn {
+  background: linear-gradient(to right, var(--orange-400), var(--pink-500));
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+.load-sample-btn:hover {
+  background: linear-gradient(to right, var(--orange-500), var(--pink-600));
+}
+
+/* Delete Button */
+.delete-btn {
+  background-color: var(--rose-600);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: var(--rose-500);
+}
+
+/* Small Buttons for Mobile */
+@media (max-width: 500px) {
+  .btn-sm {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+  }
+}
