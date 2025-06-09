@@ -168,7 +168,7 @@ a {
 
 /* Stats Cards */
 .stat-card {
-  display: flex;
+  display: table-row;
   align-items: center;
   padding: 1.5rem;
   border-radius: 10px;
@@ -219,6 +219,7 @@ a {
   color: #6b7280;
   font-size: 0.9rem;
 }
+
 
 /* Table Styles */
 .table th {

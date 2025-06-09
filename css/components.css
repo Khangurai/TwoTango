@@ -138,7 +138,7 @@ p.text-muted.small {
 }
 
 /* Stats */
-.stat-card {
+/* .stat-card {
   flex: 1;
   background: white;
   border-radius: 8px;
@@ -157,6 +157,52 @@ p.text-muted.small {
 .stat-label {
   font-size: 14px;
   color: #666;
+} */
+
+/* Base stat card styling */
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  width: 100%;
+  max-width: 300px; /* Limit width for better centering */
+}
+
+/* Stat value styling */
+.stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--rose-500);
+  margin: 10px 0 5px; /* Add spacing below value */
+}
+
+/* Stat label styling */
+.stat-label {
+  font-size: 14px;
+  color: #666;
+  text-transform: uppercase; /* Match image label style */
+  letter-spacing: 1px; /* Add slight spacing for readability */
+}
+
+/* Remove conflicting display: table-row and adjust layout */
+.stat-card {
+  display: flex; /* Override to ensure flex behavior */
+}
+
+/* Optional: Add background to container for pink border effect */
+.stat-container {
+  background-color: #ffebee; /* Light pink from image */
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; /* Space between cards */
 }
 
 /* Mobile Responsive Components */

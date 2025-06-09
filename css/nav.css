@@ -133,6 +133,20 @@
   color: var(--rose-600);
 }
 
+/* Active button effect for Expenses and Map */
+.nav__link.active {
+  background: linear-gradient(to right, var(--rose-600), var(--pink-600));
+  color: white;
+}
+
+/* Hover effect remains the same for active state */
+.nav__link.active:hover {
+  background: linear-gradient(to right, var(--rose-600), var(--pink-600));
+  color: white;
+}
+
+
+
 /* Mobile Responsive Navigation */
 @media screen and (max-width: 500px) {
   .nav__menu {

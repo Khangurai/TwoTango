@@ -23,6 +23,8 @@ document.querySelectorAll("[data-target]").forEach((button) => {
   });
 });
 
+
+
 // Global variables
 let mainMap;
 let expenseMap;
@@ -918,7 +920,7 @@ document.querySelectorAll("[data-target]").forEach((button) => {
   });
 });
 
-// Initialize maps
+// // Initialize maps
 window.initMap = initMap;
 
 // Footer
