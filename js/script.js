@@ -23,8 +23,6 @@ document.querySelectorAll("[data-target]").forEach((button) => {
   });
 });
 
-
-
 // Global variables
 let mainMap;
 let expenseMap;
@@ -35,6 +33,7 @@ let selectedLocation = null;
 let currentFilter = "all";
 let currentMarker;
 let accuracyCircle;
+let expenseDataTable;
 
 // Sample expenses (you can keep this or remove it based on your needs)
 const sampleExpenses = [
@@ -223,7 +222,7 @@ const sampleExpenses = [
   {
     id: "1749312657759",
     amount: 75000,
-    category: "Other",
+    category: "Furniture",
     date: "2025-05-05",
     paidBy: "Partner 2",
     notes: "New chair",
@@ -251,7 +250,7 @@ const sampleExpenses = [
   {
     id: "1749312657761",
     amount: 50000,
-    category: "Shopping",
+    category: "Electronics",
     date: "2025-05-18",
     paidBy: "Partner 2",
     notes: "Phone accessories",
@@ -624,30 +623,79 @@ function saveExpense(expense) {
 // Add marker to map
 function addMarker(expense) {
   if (!expense.location.lat || !expense.location.lng) return;
+
   const marker = new google.maps.Marker({
     position: { lat: expense.location.lat, lng: expense.location.lng },
     map: mainMap,
     title: `${expense.location.name} - ${expense.amount} MMK (${expense.notes})`,
     id: expense.id,
   });
+
+  // Accessing CSS variables directly in JavaScript for inline styles
+  // This is a bit advanced; normally you'd use classes.
+  // For demonstration, let's assume you have access to these vars.
+  // In a real scenario, it's better to define classes in your CSS.
+  // We'll primarily use classes where possible.
+
+  const infoWindowContent = `
+    <div style="
+      font-family: 'Open Sans', sans-serif; /* Use your default font */
+      color: var(--title-color, #1c1c1e); /* Default text color from base.css */
+      padding: 15px; /* Add some padding */
+      max-width: 250px; /* Limit info window width */
+    ">
+      <h3 style="
+        font-size: 1.3rem; /* Slightly larger for the title */
+        font-weight: 600; /* Bolder title */
+        color: var(--rose-600, #e11d48); /* Use a primary color for the title */
+        margin-bottom: 8px;
+      ">${expense.location.name}</h3>
+      <p style="margin-bottom: 4px;"><strong>Address:</strong> ${
+        expense.location.address
+      }</p>
+      <p style="margin-bottom: 4px;"><strong>Amount:</strong> <span style="
+        color: var(--pink-500, #ec4899); /* Highlight amount color */
+        font-weight: bold;
+        font-size: 1.1em; /* Slightly larger amount */
+      ">${expense.amount} MMK</span></p>
+      <p style="margin-bottom: 4px;"><strong>Category:</strong>
+        <span style="
+          background-color: #f7d6e0; /* Similar to category-badge in components.css */
+          color: var(--rose-600);
+          padding: 3px 8px;
+          border-radius: 4px;
+          font-size: 0.85em;
+          font-weight: 600;
+        ">${expense.category}</span>
+      </p>
+      <p style="margin-bottom: 4px;"><strong>Paid By:</strong> ${
+        expense.paidBy
+      }</p>
+      <p style="margin-bottom: 4px;"><strong>Notes:</strong> ${
+        expense.notes ||
+        '<span style="font-style: italic; color: #777;">No notes</span>'
+      }</p>
+      <p style="margin-bottom: 0;"><strong>Date:</strong> ${new Date(
+        expense.date
+      ).toLocaleDateString()}</p>
+      <button
+        onclick="deleteExpense('${expense.id}')"
+        class="delete-btn"
+        style="margin-top: 15px; /* More space above button */
+               padding: 8px 15px; /* Slightly larger button */
+               font-size: 0.95rem; /* Readable font size */
+               transition: background-color 0.3s ease; /* Smooth transition for hover */
+        "
+      >
+        Delete
+      </button>
+    </div>
+  `;
+
   const infoWindow = new google.maps.InfoWindow({
-    content: `
-      <div>
-        <h3>${expense.location.name}</h3>
-        <p><strong>Address:</strong> ${expense.location.address}</p>
-        <p><strong>Amount:</strong> ${expense.amount} MMK</p>
-        <p><strong>Category:</strong> ${expense.category}</p>
-        <p><strong>Paid By:</strong> ${expense.paidBy}</p>
-        <p><strong>Notes:</strong> ${expense.notes || "No notes"}</p>
-        <p><strong>Date:</strong> ${new Date(
-          expense.date
-        ).toLocaleDateString()}</p>
-        <button onclick="deleteExpense('${
-          expense.id
-        }')" class="delete-btn" style="margin-top: 10px;">Delete</button>
-      </div>
-    `,
+    content: infoWindowContent,
   });
+
   marker.addListener("click", () => infoWindow.open(mainMap, marker));
   markers.push(marker);
 }
@@ -747,49 +795,206 @@ function clearMarkers() {
 
 // Render filtered expense list
 function renderFilteredExpenseList(filteredExpenses) {
-  const expenseList = document.getElementById("expenseList");
-  filteredExpenses.sort((a, b) => new Date(b.date) - new Date(a.date));
-  expenseList.innerHTML =
-    filteredExpenses.length === 0
-      ? "<p>No expenses found for this filter.</p>"
-      : "";
-  filteredExpenses.forEach((expense) => {
-    const expenseItem = document.createElement("div");
-    expenseItem.className = "expense-item";
-    expenseItem.innerHTML = `
-      <div>
-        <strong>${expense.location?.name || "Unknown Location"}</strong>
-        <p>${expense.notes || ""}</p>
-        <p><strong>Category:</strong> ${expense.category}</p>
-        <p><strong>Paid By:</strong> ${expense.paidBy}</p>
-        <small>${new Date(expense.date).toLocaleDateString()}</small>
-      </div>
-      <div>
-        <span><strong>${expense.amount} MMK</strong></span>
-        <button class="delete-btn" onclick="deleteExpense('${
-          expense.id
-        }')">Delete</button>
-      </div>
-    `;
-    expenseItem.addEventListener("click", (e) => {
-      if (
-        !e.target.classList.contains("delete-btn") &&
-        expense.location?.lat &&
-        expense.location?.lng
-      ) {
-        mainMap.setCenter({
-          lat: expense.location.lat,
-          lng: expense.location.lng,
-        });
-        mainMap.setZoom(15);
-        const mapTab = new bootstrap.Tab(document.getElementById("map-tab"));
-        mapTab.show();
+  // Destroy existing DataTable instance if it exists
+  if ($.fn.DataTable.isDataTable("#expenseTable")) {
+    expenseDataTable.destroy();
+  }
+
+  // Initialize DataTable again with responsive settings and custom rendering
+  expenseDataTable = $("#expenseTable").DataTable({
+    data: filteredExpenses,
+    responsive: {
+      details: {
+        display: $.fn.dataTable.Responsive.display.modal({
+          header: function (row) {
+            var data = row.data();
+            return "Details for " + data.location?.name || "General Expense";
+          },
+        }),
+        renderer: $.fn.dataTable.Responsive.renderer.tableAll({
+          tableClass: "table",
+        }),
+      },
+    },
+    order: [[4, "desc"]], // Default sort by date (column index 4)
+    columns: [
+      {
+        data: "location.name",
+        defaultContent: "General Expense",
+        render: function (data, type, row) {
+          const paidByColor = row.paidBy === "Partner 1" ? "blue" : "green"; // Using inline style for example, ideally move to CSS classes
+          return `<span style="color: ${paidByColor};">${data}</span>`;
+        },
+        // Visible on all screen sizes, for mobile it's the primary column
+        className: "all",
+      },
+      {
+        data: "notes",
+        defaultContent: "",
+        // Hidden on mobile, shown on desktop
+        className: "desktop",
+      },
+      {
+        data: "category",
+        // Hidden on mobile, shown on desktop
+        className: "desktop",
+        render: function (data, type, row) {
+          const paidByColor = row.paidBy === "Partner 1" ? "blue" : "green";
+          return `<span style="color: ${paidByColor};">${data}</span>`;
+        },
+      },
+      {
+        data: "paidBy",
+        // Visible on all screen sizes (priority 2, after location)
+        className: "all",
+      },
+      {
+        data: "date",
+        render: function (data, type, row) {
+          return new Date(data).toLocaleDateString("en-GB");
+        },
+        // Visible on all screen sizes (priority 3)
+        className: "all",
+      },
+      {
+        data: "amount",
+        render: function (data, type, row) {
+          return `${data.toLocaleString()} MMK`;
+        },
+        // Visible on all screen sizes (priority 1)
+        className: "all",
+      },
+      {
+        data: null,
+        orderable: false,
+        render: function (data, type, row) {
+          return `
+            <button class="btn btn-danger btn-sm delete-btn" onclick="deleteExpense('${row.id}')">
+                Delete
+            </button>
+          `;
+        },
+        // Visible on all screen sizes
+        className: "all",
+      },
+    ],
+    columnDefs: [
+      {
+        orderable: false,
+        targets: [6], // Disable sorting for the "Action" column
+      },
+    ],
+    language: {
+      emptyTable: "No expenses found.",
+    },
+    // Add row click event for map functionality
+    rowCallback: function (row, data) {
+      $(row).on("click", function (e) {
+        if (
+          !$(e.target).hasClass("delete-btn") &&
+          data.location?.lat &&
+          data.location?.lng
+        ) {
+          // Assuming mainMap and bootstrap are globally available as in original code
+          if (
+            typeof mainMap !== "undefined" &&
+            typeof bootstrap !== "undefined"
+          ) {
+            mainMap.setCenter({
+              lat: data.location.lat,
+              lng: data.location.lng,
+            });
+            mainMap.setZoom(15);
+            const mapTab = new bootstrap.Tab(
+              document.getElementById("map-tab")
+            );
+            mapTab.show();
+          } else {
+            console.warn(
+              "mainMap or bootstrap not defined. Cannot show location on map."
+            );
+          }
+        }
+      });
+    },
+  });
+
+  // Apply filters based on input values for the DataTables
+  $("#dateFilterTable")
+    .off("change")
+    .on("change", function () {
+      const dateValue = this.value; // e.g., "YYYY-MM-DD"
+      expenseDataTable.column(4).search(dateValue).draw();
+    });
+
+  $("#amountFilterTable")
+    .off("keyup change")
+    .on("keyup change", function () {
+      const amount = parseFloat(this.value);
+      if (!isNaN(amount)) {
+        // Custom filter for amount to match exactly or start with the entered value
+        // You might need a more complex custom filter for range or "greater than"
+        expenseDataTable.column(5).search(this.value.trim()).draw();
+      } else {
+        expenseDataTable.column(5).search("").draw(); // Clear filter if input is not a number
       }
     });
-    expenseList.appendChild(expenseItem);
-  });
+
+  // Global search (if you want one for all columns)
+  // $('#myGlobalSearchInput').on('keyup', function() {
+  //     expenseDataTable.search(this.value).draw();
+  // });
 }
 
+$(document).ready(function () {
+  // Initial call to renderFilteredExpenseList can be done here with initial data
+  // For now, let's assume an empty array or existing data will be passed
+  // Example: renderFilteredExpenseList(yourInitialExpensesArray);
+
+  // If you want to initialize DataTables immediately with no data and then add it later,
+  // you can call it without data initially and then use expenseDataTable.rows.add().draw()
+  if (!$.fn.DataTable.isDataTable("#expenseTable")) {
+    expenseDataTable = $("#expenseTable").DataTable({
+      responsive: {
+        details: {
+          display: $.fn.dataTable.Responsive.display.modal({
+            header: function (row) {
+              var data = row.data();
+              return "Details for " + data.location?.name || "General Expense";
+            },
+          }),
+          renderer: $.fn.dataTable.Responsive.renderer.tableAll({
+            tableClass: "table",
+          }),
+        },
+      },
+      order: [[4, "desc"]], // Default sort by date (column index 4)
+      columns: [
+        { data: "location.name", defaultContent: "General Expense" },
+        { data: "notes", defaultContent: "" },
+        { data: "category" },
+        { data: "paidBy" },
+        { data: "date" },
+        { data: "amount" },
+        { data: null, orderable: false }, // Action column
+      ],
+      columnDefs: [
+        { orderable: false, targets: [6] }, // Disable sorting for the "Action" column
+        // Hide these columns on small screens
+        { responsivePriority: 1, targets: [5] }, // Amount - visible always
+        { responsivePriority: 2, targets: [0] }, // Location - visible always
+        { responsivePriority: 3, targets: [3] }, // Paid By - visible always
+        { responsivePriority: 4, targets: [4] }, // Date - visible always
+        { responsivePriority: 5, targets: [6] }, // Action - visible always
+        { responsivePriority: 10001, targets: [1] }, // Notes - hide first
+        { responsivePriority: 10002, targets: [2] }, // Category - hide second
+      ],
+      language: {
+        emptyTable: "No expenses found.", // Custom message when no data is available
+      },
+    });
+  }
+});
 // Render expense list
 function renderExpenseList() {
   filterExpenses(currentFilter);
