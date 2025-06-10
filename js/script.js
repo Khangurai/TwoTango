@@ -68,7 +68,7 @@ const sampleExpenses = [
   {
     id: "1749312657748",
     amount: 8000,
-    category: "Transportation",
+    category: "Travel",
     date: "2024-08-22",
     paidBy: "Partner 1",
     notes: "Taxi fare",
@@ -110,7 +110,7 @@ const sampleExpenses = [
   {
     id: "1749312657751",
     amount: 15000,
-    category: "Groceries",
+    category: "Other",
     date: "2024-11-18",
     paidBy: "Partner 2",
     notes: "Supermarket shopping",
@@ -124,7 +124,7 @@ const sampleExpenses = [
   {
     id: "1749312657752",
     amount: 60000,
-    category: "Electronics",
+    category: "Shopping",
     date: "2024-12-25",
     paidBy: "Partner 1",
     notes: "New headphones",
@@ -180,7 +180,7 @@ const sampleExpenses = [
   {
     id: "1749312657756",
     amount: 12000,
-    category: "Transportation",
+    category: "Travel",
     date: "2025-04-03",
     paidBy: "Partner 1",
     notes: "Bus tickets",
@@ -222,7 +222,7 @@ const sampleExpenses = [
   {
     id: "1749312657759",
     amount: 75000,
-    category: "Furniture",
+    category: "Other",
     date: "2025-05-05",
     paidBy: "Partner 2",
     notes: "New chair",
@@ -292,7 +292,7 @@ const sampleExpenses = [
   {
     id: "1749312657764",
     amount: 18000,
-    category: "Transportation",
+    category: "Travel",
     date: "2025-06-03",
     paidBy: "Partner 1",
     notes: "Taxi to meeting",
@@ -624,43 +624,48 @@ function saveExpense(expense) {
 function addMarker(expense) {
   if (!expense.location.lat || !expense.location.lng) return;
 
+  // Get category emoji
+  const categoryEmoji = getCategoryEmoji(expense.category);
+  
+  // Create marker with only emoji as label
   const marker = new google.maps.Marker({
     position: { lat: expense.location.lat, lng: expense.location.lng },
     map: mainMap,
     title: `${expense.location.name} - ${expense.amount} MMK (${expense.notes})`,
     id: expense.id,
+    label: {
+      text: categoryEmoji,
+      fontSize: '16px',
+      color: '#000000' // Emoji color
+    },
+    icon: null // Remove default red icon
   });
 
-  // Accessing CSS variables directly in JavaScript for inline styles
-  // This is a bit advanced; normally you'd use classes.
-  // For demonstration, let's assume you have access to these vars.
-  // In a real scenario, it's better to define classes in your CSS.
-  // We'll primarily use classes where possible.
-
+  // Info window content with category emoji in the title
   const infoWindowContent = `
     <div style="
-      font-family: 'Open Sans', sans-serif; /* Use your default font */
-      color: var(--title-color, #1c1c1e); /* Default text color from base.css */
-      padding: 15px; /* Add some padding */
-      max-width: 250px; /* Limit info window width */
+      font-family: 'Open Sans', sans-serif;
+      color: var(--title-color, #1c1c1e);
+      padding: 15px;
+      max-width: 250px;
     ">
       <h3 style="
-        font-size: 1.3rem; /* Slightly larger for the title */
-        font-weight: 600; /* Bolder title */
-        color: var(--rose-600, #e11d48); /* Use a primary color for the title */
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--rose-600, #e11d48);
         margin-bottom: 8px;
-      ">${expense.location.name}</h3>
+      ">${categoryEmoji} ${expense.location.name}</h3>
       <p style="margin-bottom: 4px;"><strong>Address:</strong> ${
-        expense.location.address
+        expense.location.address || 'Not specified'
       }</p>
       <p style="margin-bottom: 4px;"><strong>Amount:</strong> <span style="
-        color: var(--pink-500, #ec4899); /* Highlight amount color */
+        color: var(--pink-500, #ec4899);
         font-weight: bold;
-        font-size: 1.1em; /* Slightly larger amount */
+        font-size: 1.1em;
       ">${expense.amount} MMK</span></p>
       <p style="margin-bottom: 4px;"><strong>Category:</strong>
         <span style="
-          background-color: #f7d6e0; /* Similar to category-badge in components.css */
+          background-color: #f7d6e0;
           color: var(--rose-600);
           padding: 3px 8px;
           border-radius: 4px;
@@ -681,11 +686,19 @@ function addMarker(expense) {
       <button
         onclick="deleteExpense('${expense.id}')"
         class="delete-btn"
-        style="margin-top: 15px; /* More space above button */
-               padding: 8px 15px; /* Slightly larger button */
-               font-size: 0.95rem; /* Readable font size */
-               transition: background-color 0.3s ease; /* Smooth transition for hover */
+        style="
+          margin-top: 15px;
+          padding: 8px 15px;
+          font-size: 0.95rem;
+          background-color: var(--rose-600, #e11d48);
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
         "
+        onmouseover="this.style.backgroundColor='var(--rose-700, #be123c)'"
+        onmouseout="this.style.backgroundColor='var(--rose-600, #e11d48)'"
       >
         Delete
       </button>
@@ -696,9 +709,33 @@ function addMarker(expense) {
     content: infoWindowContent,
   });
 
-  marker.addListener("click", () => infoWindow.open(mainMap, marker));
+  marker.addListener("click", () => {
+    if (currentInfoWindow) {
+      currentInfoWindow.close();
+    }
+    infoWindow.open(mainMap, marker);
+    currentInfoWindow = infoWindow;
+  });
+  
   markers.push(marker);
 }
+
+// Helper function to get emoji for each category
+function getCategoryEmoji(category) {
+  const emojiMap = {
+    'Food & Dining': '🍽️',
+    'Travel': '✈️',
+    'Entertainment': '🎮',
+    'Shopping': '🛍️',
+    'Utilities': '💡',
+    'Health': '🩺',
+    'Other': '🔖'
+  };
+  return emojiMap[category] || '📍'; // default marker if category not found
+}
+
+// Global variable to track the currently open info window
+let currentInfoWindow = null;
 
 // Filter expenses based on date
 function filterExpenses(filterType) {
