@@ -76,7 +76,7 @@ p.text-muted.small {
 
 /* Expense List */
 .expense-list {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   background: white;
   border-radius: 8px;
   padding: 15px;
@@ -160,7 +160,7 @@ p.text-muted.small {
 } */
 
 /* Base stat card styling */
-.stat-card {
+/* .stat-card {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -170,7 +170,46 @@ p.text-muted.small {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   margin-bottom: 1.5rem;
   width: 100%;
-  max-width: 300px; /* Limit width for better centering */
+  max-width: 300px; 
+}
+
+
+.stat-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--rose-500);
+  margin: 10px 0 5px; 
+}
+
+
+.stat-label {
+  font-size: 14px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+
+
+.stat-card {
+  display: flex;
+} */
+
+/* Base stat card styling */
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  width: 100%; /* Make it full width of its column */
+  transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Stat value styling */
@@ -189,11 +228,11 @@ p.text-muted.small {
   letter-spacing: 1px; /* Add slight spacing for readability */
 }
 
+/* Container for stat cards - not needed from the old code */
 /* Remove conflicting display: table-row and adjust layout */
 .stat-card {
   display: flex; /* Override to ensure flex behavior */
 }
-
 /* Optional: Add background to container for pink border effect */
 .stat-container {
   background-color: #ffebee; /* Light pink from image */
@@ -250,4 +289,51 @@ p.text-muted.small {
 /* Visualizer bars */
 .visualizer-bar {
   background: linear-gradient(to top, var(--rose-500), var(--pink-500));
+}
+
+/* Add this to components.css */
+.partnerBalanceCard {
+  margin-top: 2rem;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--rose-500);
+}
+
+.card.border-danger-subtle .card-title {
+  font-size: 1rem;
+  color: var(--pink-600);
+  margin-bottom: 0.5rem;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .nav__item {
+    margin-bottom: 0.5rem;
+  }
+
+  .expense-list {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .stat-value {
+    font-size: 1.3rem;
+  }
+
+  .card.border-danger-subtle {
+    padding: 15px;
+  }
+
+  .filter-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

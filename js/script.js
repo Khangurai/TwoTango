@@ -223,7 +223,7 @@ const sampleExpenses = [
   {
     id: "1749312657759",
     amount: 75000,
-    category: "Furniture",
+    category: "Other",
     date: "2025-05-05",
     paidBy: "Partner 2",
     notes: "New chair",
@@ -251,7 +251,7 @@ const sampleExpenses = [
   {
     id: "1749312657761",
     amount: 50000,
-    category: "Electronics",
+    category: "Shopping",
     date: "2025-05-18",
     paidBy: "Partner 2",
     notes: "Phone accessories",

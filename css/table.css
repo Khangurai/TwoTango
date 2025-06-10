@@ -1,0 +1,226 @@
+/* In your style.css or a dedicated custom.css */
+
+/* Ensure the table container uses full available width and allows scrolling */
+#expenseTableContainer {
+  width: 100%; /* Take full width of its parent column */
+  overflow-x: auto; /* Add horizontal scroll if table content overflows */
+}
+
+/* Force the table itself to take 100% width, overriding DataTables potential inline styles if needed */
+#expenseTable {
+  width: 100% !important;
+}
+
+/* Adjust padding and text alignment for table headers */
+table.dataTable thead th,
+table.dataTable thead td {
+  padding: 10px 18px;
+  text-align: left; /* Ensure headers are left-aligned */
+  vertical-align: bottom; /* Align text to bottom if multiple lines */
+  background-color: #f8f8f8; /* Light grey background for headers */
+  color: var(--title-color); /* Use your defined title color */
+}
+
+/* Adjust padding and text alignment for table body cells */
+table.dataTable tbody td {
+  padding: 8px 10px; /* Standard padding */
+  vertical-align: top; /* Align content to the top */
+  text-align: left; /* Default text alignment for most columns */
+}
+
+/* Specific alignment for the "Amount (MMK)" column (assuming it's the 6th column) */
+table.dataTable tbody td:nth-child(6) {
+  text-align: right; /* Right align numbers for currency */
+}
+
+/* Ensure filter controls are laid out well */
+.expense-list .filter-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  justify-content: space-between; /* Distribute items */
+  align-items: center;
+}
+
+.expense-list .filter-controls .form-control {
+  flex: 1; /* Allow inputs to grow and fill space */
+  min-width: 150px; /* Minimum width for inputs before wrapping */
+}
+
+/* DataTables Pagination & Info styling (if not already in your style.css) */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_processing,
+.dataTables_wrapper .dataTables_paginate {
+  color: var(--title-color); /* Use your title color */
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  border: 1px solid var(--rose-500);
+  border-radius: 4px;
+  padding: 5px;
+  background-color: white;
+  color: var(--title-color);
+  margin-left: 0.5em;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  box-sizing: border-box;
+  display: inline-block;
+  min-width: 1.5em;
+  padding: 0.5em 1em;
+  margin-left: 2px;
+  text-align: center;
+  text-decoration: none !important;
+  cursor: pointer;
+  color: var(--rose-600) !important;
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  color: white !important;
+  background: linear-gradient(to right, var(--rose-500), var(--pink-500));
+  border-color: var(--rose-500);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+  cursor: default;
+  color: #666 !important;
+  border: 1px solid transparent;
+  background: transparent;
+  box-shadow: none;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  color: white !important;
+  background: linear-gradient(to right, var(--rose-600), var(--pink-600));
+  border-color: var(--rose-600);
+}
+
+table.dataTable.no-footer {
+  border-bottom: 1px solid #111;
+}
+
+table.dataTable.stripe tbody tr.odd,
+table.dataTable.display tbody tr.odd {
+  background-color: #f9f9f9;
+}
+
+table.dataTable.display tbody tr.even,
+table.dataTable.order-column.stripe tbody tr.even {
+  background-color: white;
+}
+
+table.dataTable.hover tbody tr:hover,
+table.dataTable.display tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+.dataTables_wrapper .dataTables_info {
+  clear: both;
+  float: left;
+  padding-top: 0.755em;
+}
+
+.dataTables_wrapper .dataTables_paginate {
+  float: right;
+  text-align: right;
+  padding-top: 0.25em;
+}
+
+@media screen and (max-width: 767px) {
+  .dataTables_wrapper .dataTables_info,
+  .dataTables_wrapper .dataTables_paginate {
+    float: none;
+    text-align: center;
+  }
+  .dataTables_wrapper .dataTables_filter,
+  .dataTables_wrapper .dataTables_length {
+    text-align: center;
+    float: none;
+  }
+}
+
+/* General Table Styling */
+table {
+  width: 100%; /* Ensure table takes full width of its container */
+  border-collapse: collapse; /* Collapse borders for a cleaner look */
+  margin-bottom: 1rem; /* Space below the table */
+  background-color: #ffffff; /* White background for the table */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+  border-radius: 8px; /* Slightly rounded corners */
+  overflow: hidden; /* Ensures borders/shadows are applied to rounded corners */
+}
+
+/* Table Headers */
+table thead th {
+  background-color: #f0f0f0; /* Light grey background for headers */
+  color: #333; /* Darker text color for headers */
+  font-weight: 600; /* Slightly bolder headers */
+  padding: 12px 15px; /* Ample padding for header text */
+  border: 1px solid #ddd; /* Light border around headers */
+  text-align: center; /* Center align headers by default */
+  vertical-align: middle; /* Vertically align text in the middle */
+}
+
+/* Table Body Cells */
+table tbody td {
+  padding: 10px 15px; /* Padding for body cells */
+  border: 1px solid #eee; /* Lighter border for body cells */
+  vertical-align: middle; /* Vertically align text in the middle */
+  color: #555; /* Default text color for body */
+}
+
+/* Zebra Striping (Alternating row colors) */
+table tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* Lighter background for even rows */
+}
+
+/* Hover Effect for Rows */
+table tbody tr:hover {
+  background-color: #f1f1f1; /* Slight highlight on hover */
+  cursor: pointer; /* Indicate it's interactive, if applicable */
+}
+
+/* Alignment for Specific Columns (assuming standard table structure) */
+/* Adjust nth-child() based on the actual column index in your HTML */
+
+/* Numeric columns - Right align */
+table tbody td:nth-child(3), /* Amount (MMK) */
+table tbody td:nth-child(4), /* Remaining */
+table tbody td:nth-child(5), /* Interest Rate (%) */
+table tbody td:nth-child(6), /* Days */
+table tbody td:nth-child(7), /* Daily Interest */
+table tbody td:nth-child(8), /* Principal Paid */
+table tbody td:nth-child(9) {
+  /* Total Paid */
+  text-align: right;
+  font-family: "Open Sans", sans-serif; /* Use a monospaced or clear font for numbers */
+}
+
+/* Text columns - Left align (default, but good to be explicit) */
+table tbody td:nth-child(1), /* Year */
+table tbody td:nth-child(2) {
+  /* Month */
+  text-align: left;
+}
+
+/* Responsive Table (if not using DataTables Responsive) */
+/* This will make the table scroll horizontally on small screens */
+.table-responsive-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* If you are using DataTables, it will likely have its own CSS for responsiveness.
+   The above .table-responsive-container is a generic solution. */
