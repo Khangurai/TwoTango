@@ -327,12 +327,14 @@ function initMap() {
   mainMap = new google.maps.Map(document.getElementById("mainMap"), {
     center: defaultLocation,
     zoom: 12,
+    gestureHandling: "greedy",
   });
 
   // Initialize expense map
   expenseMap = new google.maps.Map(document.getElementById("expenseMap"), {
     center: defaultLocation,
     zoom: 12,
+    // gestureHandling: "none",
   });
 
   geocoder = new google.maps.Geocoder();
