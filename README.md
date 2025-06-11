@@ -30,7 +30,7 @@ Slides: https://gamma.app/docs/TwoTango-Our-Tracker-suv48xnb4jfebu8
 
 1. **Clone this repository**
    ```bash
-   git clone https://github.com/yourusername/twotango-expense-tracker.git
+   git clone https://github.com/Khangurai/TwoTango.git
    ```
 
 2. **Open `index.html` in your browser**
