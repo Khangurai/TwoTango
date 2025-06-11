@@ -309,8 +309,8 @@ const sampleExpenses = [
     location: {
       name: "Le Planteur",
       address: "Yangon, Myanmar",
-      lat: 16.798765,
-      lng: 96.154321,
+      lat: 16,
+      lng: 98,
     },
   },
 ];
@@ -343,10 +343,12 @@ function initMap() {
   locationButton.title = "Show your location";
   locationButton.innerHTML = `
     <svg class="location-icon" viewBox="0 0 24 24">
-      <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
+      <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52-6.83 3.06 11H1v2h2h6.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
     </svg>
   `;
-  expenseMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton);
+  expenseMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
+    locationButton
+  );
   locationButton.addEventListener("click", getCurrentLocationForExpense);
 
   autocomplete.addListener("place_changed", () => {
@@ -388,18 +390,22 @@ function initMap() {
     }
   });
 
-  document.getElementById("includeLocation").addEventListener("change", function () {
-    document.getElementById("locationSection").classList.toggle("d-none", !this.checked);
-    selectedLocation = null;
-    document.getElementById("locationInfo").classList.add("d-none");
-    document.getElementById("autocomplete").value = "";
-    if (currentMarker) currentMarker.setMap(null);
-    if (accuracyCircle) accuracyCircle.setMap(null);
-    currentMarker = null;
-    accuracyCircle = null;
-    expenseMap.setCenter(defaultLocation);
-    expenseMap.setZoom(12);
-  });
+  document
+    .getElementById("includeLocation")
+    .addEventListener("change", function () {
+      document
+        .getElementById("locationSection")
+        .classList.toggle("d-none", !this.checked);
+      selectedLocation = null;
+      document.getElementById("locationInfo").classList.add("d-none");
+      document.getElementById("autocomplete").value = "";
+      if (currentMarker) currentMarker.setMap(null);
+      if (accuracyCircle) accuracyCircle.setMap(null);
+      currentMarker = null;
+      accuracyCircle = null;
+      expenseMap.setCenter(defaultLocation);
+      expenseMap.setZoom(12);
+    });
 
   document.getElementById("dateFilter").addEventListener("change", function () {
     currentFilter = this.value;
@@ -516,12 +522,14 @@ function getCurrentLocationForExpense() {
   );
 }
 
+// READ: Loads sample data into local storage and triggers data display
 function loadSampleData() {
   localStorage.setItem("expenses", JSON.stringify(sampleExpenses));
   loadData();
   showToast("Sample data loaded successfully!");
 }
 
+// READ: Retrieves expenses from local storage and updates UI (map, table, summary)
 function loadData() {
   const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
   clearMarkers();
@@ -529,6 +537,7 @@ function loadData() {
   updateSummaryCard();
 }
 
+// CREATE: Saves a new expense to local storage
 function saveExpense(expense) {
   let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
   expenses.push(expense);
@@ -584,11 +593,16 @@ function addMarker(expense) {
           font-weight: 600;
         ">${expense.category}</span>
       </p>
-      <p style="margin-bottom: 4px;"><strong>Paid By:</strong> ${expense.paidBy}</p>
-      <p style="margin-bottom: 4px;"><strong>Notes:</strong> ${
-        expense.notes || '<span style="font-style: italic; color: #777;">No notes</span>'
+      <p style="margin-bottom: 4px;"><strong>Paid By:</strong> ${
+        expense.paidBy
       }</p>
-      <p style="margin-bottom: 0;"><strong>Date:</strong> ${new Date(expense.date).toLocaleDateString()}</p>
+      <p style="margin-bottom: 4px;"><strong>Notes:</strong> ${
+        expense.notes ||
+        '<span style="font-style: italic; color: #777;">No notes</span>'
+      }</p>
+      <p style="margin-bottom: 0;"><strong>Date:</strong> ${new Date(
+        expense.date
+      ).toLocaleDateString()}</p>
       <button
         onclick="deleteExpense('${expense.id}')"
         class="delete-btn"
@@ -639,6 +653,7 @@ function getCategoryEmoji(category) {
   return emojiMap[category] || "📍";
 }
 
+// READ: Filters expenses based on date range and displays them
 function filterExpenses(filterType) {
   clearMarkers();
   const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
@@ -729,19 +744,34 @@ function clearMarkers() {
   markers = [];
 }
 
+// READ: Renders filtered expenses in the DataTable
 function renderFilteredExpenseList(filteredExpenses) {
+  // Destroy existing DataTable if initialized
   if ($.fn.DataTable.isDataTable("#expenseTable")) {
     expenseDataTable.destroy();
   }
 
+  // Format data for proper sorting
+  const formattedData = filteredExpenses.map((expense) => ({
+    ...expense,
+    dateSort: isNaN(new Date(expense.date).getTime())
+      ? 0
+      : new Date(expense.date).getTime(), // Numeric timestamp for sorting
+    amountSort: isNaN(parseFloat(expense.amount))
+      ? 0
+      : parseFloat(expense.amount), // Ensure amount is numeric for sorting
+    amountFormatted: `${parseFloat(expense.amount).toLocaleString()} MMK`, // Formatted for display
+  }));
+
+  // Initialize DataTable
   expenseDataTable = $("#expenseTable").DataTable({
-    data: filteredExpenses,
+    data: formattedData,
     responsive: {
       details: {
         display: $.fn.dataTable.Responsive.display.modal({
           header: function (row) {
             var data = row.data();
-            return "Details for " + data.location?.name || "General Expense";
+            return "Details for " + (data.location?.name || "General Expense");
           },
         }),
         renderer: $.fn.dataTable.Responsive.renderer.tableAll({
@@ -749,14 +779,16 @@ function renderFilteredExpenseList(filteredExpenses) {
         }),
       },
     },
-    order: [[4, "desc"]],
+    order: [[4, "desc"]], // Default sort by date (descending)
     columns: [
       {
         data: "location.name",
         defaultContent: "General Expense",
         render: function (data, type, row) {
           const paidByColor = row.paidBy === "Partner 1" ? "blue" : "green";
-          return `<span style="color: ${paidByColor};">${data}</span>`;
+          return `<span style="color: ${paidByColor};">${
+            data || "General Expense"
+          }</span>`;
         },
         className: "all",
       },
@@ -778,18 +810,26 @@ function renderFilteredExpenseList(filteredExpenses) {
         className: "all",
       },
       {
-        data: "date",
+        data: "dateSort", // Use dateSort for sorting
         render: function (data, type, row) {
-          return new Date(data).toLocaleDateString("en-GB");
+          // Display formatted date
+          return type === "display" || type === "filter"
+            ? new Date(row.date).toLocaleDateString("en-GB")
+            : data; // Return numeric timestamp for sorting
         },
         className: "all",
+        type: "num", // Explicitly set to numeric for sorting
       },
       {
-        data: "amount",
+        data: "amountSort", // Use amountSort for sorting
         render: function (data, type, row) {
-          return `${data.toLocaleString()} MMK`;
+          // Display formatted amount
+          return type === "display" || type === "filter"
+            ? row.amountFormatted
+            : data; // Return numeric amount for sorting
         },
         className: "all",
+        type: "num", // Explicitly set to numeric for sorting
       },
       {
         data: null,
@@ -810,8 +850,15 @@ function renderFilteredExpenseList(filteredExpenses) {
     columnDefs: [
       {
         orderable: false,
-        targets: [6],
+        targets: [6], // Disable sorting on action buttons
       },
+      { responsivePriority: 1, targets: [5] }, // Amount
+      { responsivePriority: 2, targets: [0] }, // Location
+      { responsivePriority: 3, targets: [3] }, // Paid By
+      { responsivePriority: 4, targets: [4] }, // Date
+      { responsivePriority: 5, targets: [6] }, // Actions
+      { responsivePriority: 10001, targets: [1] }, // Notes
+      { responsivePriority: 10002, targets: [2] }, // Category
     ],
     language: {
       emptyTable: "No expenses found.",
@@ -827,34 +874,27 @@ function renderFilteredExpenseList(filteredExpenses) {
           return;
         }
         if (data.location?.lat && data.location?.lng) {
-          if (typeof mainMap !== "undefined" && typeof bootstrap !== "undefined") {
+          if (
+            typeof mainMap !== "undefined" &&
+            typeof bootstrap !== "undefined"
+          ) {
             mainMap.setCenter({
               lat: data.location.lat,
               lng: data.location.lng,
             });
             mainMap.setZoom(18);
-            const mapTab = new bootstrap.Tab(document.getElementById("map-tab"));
+            const mapTab = new bootstrap.Tab(
+              document.getElementById("map-tab")
+            );
             mapTab.show();
           } else {
-            console.warn("mainMap or bootstrap not defined. Cannot show location on map.");
+            console.warn(
+              "mainMap or bootstrap not defined. Cannot show location on map."
+            );
           }
         }
       });
     },
-  });
-
-  $("#dateFilterTable").off("change").on("change", function () {
-    const dateValue = this.value;
-    expenseDataTable.column(4).search(dateValue).draw();
-  });
-
-  $("#amountFilterTable").off("keyup change").on("keyup change", function () {
-    const amount = parseFloat(this.value);
-    if (!isNaN(amount)) {
-      expenseDataTable.column(5).search(this.value.trim()).draw();
-    } else {
-      expenseDataTable.column(5).search("").draw();
-    }
   });
 }
 
@@ -866,7 +906,9 @@ $(document).ready(function () {
           display: $.fn.dataTable.Responsive.display.modal({
             header: function (row) {
               var data = row.data();
-              return "Details for " + data.location?.name || "General Expense";
+              return (
+                "Details for " + (data.location?.name || "General Expense")
+              );
             },
           }),
           renderer: $.fn.dataTable.Responsive.renderer.tableAll({
@@ -901,10 +943,12 @@ $(document).ready(function () {
   }
 });
 
+// READ: Triggers expense list rendering (calls filterExpenses)
 function renderExpenseList() {
   filterExpenses(currentFilter);
 }
 
+// UPDATE: Prepares form for editing an existing expense
 function editExpense(id) {
   const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
   const expense = expenses.find((exp) => exp.id === id);
@@ -921,7 +965,9 @@ function editExpense(id) {
   document.getElementById("paidBy").value = expense.paidBy || "Partner 1";
   document.getElementById("notes").value = expense.notes || "";
   document.getElementById("includeLocation").checked = !!(
-    expense.location && expense.location.lat && expense.location.lng
+    expense.location &&
+    expense.location.lat &&
+    expense.location.lng
   );
 
   if (expense.location && expense.location.lat && expense.location.lng) {
@@ -956,12 +1002,14 @@ function editExpense(id) {
     accuracyCircle = null;
   }
 
-  document.getElementById("expenseFormCard").querySelector(".card-title").textContent =
-    "Edit Expense";
+  document
+    .getElementById("expenseFormCard")
+    .querySelector(".card-title").textContent = "Edit Expense";
   document.getElementById("submitExpense").innerHTML =
     '<i class="bi bi-save me-1"></i> Save Changes';
 }
 
+// UPDATE: Updates an existing expense in local storage
 function updateExpense(id) {
   let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
   const expenseIndex = expenses.findIndex((exp) => exp.id === id);
@@ -1029,12 +1077,14 @@ function resetForm() {
   expenseMap.setCenter({ lat: 16.8409, lng: 96.1735 });
   expenseMap.setZoom(12);
   editingExpenseId = null;
-  document.getElementById("expenseFormCard").querySelector(".card-title").textContent =
-    "Add New Expense";
+  document
+    .getElementById("expenseFormCard")
+    .querySelector(".card-title").textContent = "Add New Expense";
   document.getElementById("submitExpense").innerHTML =
     '<i class="bi bi-plus me-1"></i> Add Transaction';
 }
 
+// DELETE: Removes an expense from local storage
 function deleteExpense(id) {
   if (confirm("Are you sure you want to delete this expense?")) {
     let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
@@ -1058,6 +1108,7 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
+// READ: Updates summary card with aggregated expense data
 function updateSummaryCard() {
   const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
   if (expenses.length === 0) {
@@ -1095,12 +1146,15 @@ function updateSummaryCard() {
     }
   }
   const avg = expenses.length > 0 ? total / expenses.length : 0;
-  document.getElementById("totalExpenses").textContent = total.toFixed(0) + " MMK";
-  document.getElementById("totalDistance").textContent = distance.toFixed(2) + " km";
+  document.getElementById("totalExpenses").textContent =
+    total.toFixed(0) + " MMK";
+  document.getElementById("totalDistance").textContent =
+    distance.toFixed(2) + " km";
   document.getElementById("totalLocations").textContent = locations.size;
   document.getElementById("avgExpense").textContent = avg.toFixed(0) + " MMK";
 }
 
+// READ: Exports expenses from the last two months as CSV
 function exportLastTwoMonthsData() {
   const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
   const twoMonthsAgo = new Date();
@@ -1135,6 +1189,7 @@ function exportLastTwoMonthsData() {
   document.body.removeChild(a);
 }
 
+// CREATE/UPDATE: Handles form submission for adding or updating expenses
 document.getElementById("expenseForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -1144,8 +1199,6 @@ document.getElementById("expenseForm").addEventListener("submit", function (e) {
   const paidBy = document.getElementById("paidBy").value;
   const notes = document.getElementById("notes").value;
   const includeLocation = document.getElementById("includeLocation").checked;
-
-  console.log("Form Values:", { amount, category, date, paidBy, notes, includeLocation, editingExpenseId });
 
   if (!amount || !category || !date || !paidBy) {
     showToast("Please fill in all required fields");
