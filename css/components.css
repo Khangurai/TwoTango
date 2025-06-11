@@ -137,62 +137,6 @@ p.text-muted.small {
   border: 1px solid #fecdd3;
 }
 
-/* Stats */
-/* .stat-card {
-  flex: 1;
-  background: white;
-  border-radius: 8px;
-  padding: 15px;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.stat-value {
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--rose-500);
-  margin: 5px 0;
-}
-
-.stat-label {
-  font-size: 14px;
-  color: #666;
-} */
-
-/* Base stat card styling */
-/* .stat-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.5rem;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  margin-bottom: 1.5rem;
-  width: 100%;
-  max-width: 300px; 
-}
-
-
-.stat-value {
-  font-size: 24px;
-  font-weight: bold;
-  color: var(--rose-500);
-  margin: 10px 0 5px; 
-}
-
-
-.stat-label {
-  font-size: 14px;
-  color: #666;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-
-
-.stat-card {
-  display: flex;
-} */
-
 /* Base stat card styling */
 .stat-card {
   display: flex;
@@ -235,7 +179,7 @@ p.text-muted.small {
 }
 /* Optional: Add background to container for pink border effect */
 .stat-container {
-  background-color: #ffebee; /* Light pink from image */
+  /* background-color: #ffebee; Light pink from image */
   padding: 20px;
   border-radius: 10px;
   display: flex;
