@@ -85,8 +85,8 @@ Slides: https://gamma.app/docs/TwoTango-Our-Tracker-suv48xnb4jfebu8
 ## 💬 Author
 
 **Aung Kaung Khant**  
-Odoo Developer | Software Enthusiast  
-GitHub: [@yourusername](https://github.com/yourusername)
+Software Enthusiast  
+GitHub: [@khangurai](https://github.com/khangurai)
 
 ---
 
