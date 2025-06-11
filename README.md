@@ -2,7 +2,8 @@
 # 📘 TwoTango Expense Tracker
 
 **TwoTango Expense Tracker** သည် အသုံးစရိတ်များကို အလွယ်တကူ ထည့်သွင်း၊ တည်းဖြတ်ပြီး Local Storage တွင် သိမ်းဆည်းထားနိုင်သော Web App တစ်ခုဖြစ်ပါသည်။ ဤ App တွင် တည်နေရာအချက်အလက်များကိုပါ ထည့်သွင်းနိုင်ပါသည်။
-Slides: `https://gamma.app/docs/TwoTango-Our-Tracker-suv48xnb4jfebu8`
+
+Slides: https://gamma.app/docs/TwoTango-Our-Tracker-suv48xnb4jfebu8
 
 ---
 
