@@ -544,6 +544,57 @@ function saveExpense(expense) {
   localStorage.setItem("expenses", JSON.stringify(expenses));
 }
 
+// CREATE/UPDATE: Handles form submission for adding or updating expenses
+document.getElementById("expenseForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const amount = document.getElementById("amount").value.trim();
+  const category = document.getElementById("category").value;
+  const date = document.getElementById("date").value;
+  const paidBy = document.getElementById("paidBy").value;
+  const notes = document.getElementById("notes").value;
+  const includeLocation = document.getElementById("includeLocation").checked;
+
+  if (!amount || !category || !date || !paidBy) {
+    showToast("Please fill in all required fields");
+    return;
+  }
+
+  const parsedAmount = parseFloat(amount);
+  if (isNaN(parsedAmount) || parsedAmount <= 0) {
+    showToast("Please enter a valid positive amount");
+    return;
+  }
+
+  if (editingExpenseId) {
+    updateExpense(editingExpenseId);
+  } else {
+    const expense = {
+      id: Date.now().toString(),
+      amount: parsedAmount,
+      category: category,
+      date: date,
+      paidBy: paidBy,
+      notes: notes,
+      location:
+        includeLocation && selectedLocation
+          ? selectedLocation
+          : {
+              name: "Unknown",
+              address: "No location provided",
+              lat: null,
+              lng: null,
+            },
+    };
+    saveExpense(expense);
+    loadData();
+    showToast("Expense added successfully!");
+  }
+
+  resetForm();
+});
+
+
 function addMarker(expense) {
   if (!expense.location.lat || !expense.location.lng) return;
 
@@ -1189,55 +1240,6 @@ function exportLastTwoMonthsData() {
   document.body.removeChild(a);
 }
 
-// CREATE/UPDATE: Handles form submission for adding or updating expenses
-document.getElementById("expenseForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-
-  const amount = document.getElementById("amount").value.trim();
-  const category = document.getElementById("category").value;
-  const date = document.getElementById("date").value;
-  const paidBy = document.getElementById("paidBy").value;
-  const notes = document.getElementById("notes").value;
-  const includeLocation = document.getElementById("includeLocation").checked;
-
-  if (!amount || !category || !date || !paidBy) {
-    showToast("Please fill in all required fields");
-    return;
-  }
-
-  const parsedAmount = parseFloat(amount);
-  if (isNaN(parsedAmount) || parsedAmount <= 0) {
-    showToast("Please enter a valid positive amount");
-    return;
-  }
-
-  if (editingExpenseId) {
-    updateExpense(editingExpenseId);
-  } else {
-    const expense = {
-      id: Date.now().toString(),
-      amount: parsedAmount,
-      category: category,
-      date: date,
-      paidBy: paidBy,
-      notes: notes,
-      location:
-        includeLocation && selectedLocation
-          ? selectedLocation
-          : {
-              name: "Unknown",
-              address: "No location provided",
-              lat: null,
-              lng: null,
-            },
-    };
-    saveExpense(expense);
-    loadData();
-    showToast("Expense added successfully!");
-  }
-
-  resetForm();
-});
 
 document.getElementById("cancelExpense").addEventListener("click", () => {
   resetForm();

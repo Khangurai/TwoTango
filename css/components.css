@@ -246,6 +246,13 @@ p.text-muted.small {
 
 /* Mobile Responsive Components */
 @media (max-width: 500px) {
+  /* .stat-container {
+    justify-content: space-between; 
+  }
+
+  .stat-card {
+    width: calc(50% - 10px); 
+  } */
   .card {
     width: 100%;
   }
