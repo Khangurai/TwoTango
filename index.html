@@ -425,7 +425,7 @@
                   <div class="card border-danger-subtle" id="expenseFormCard">
                     <div class="card-body">
                       <h5 class="card-title">Add New Expense</h5>
-                      <form id="expenseForm">
+                      <form id="expenseForm" novalidate>
                         <div class="row g-3">
                           <div class="col-md-6">
                             <label for="amount" class="form-label"
@@ -553,21 +553,6 @@
                 <div class="col-lg-10">
                   <div class="expense-list h-80 d-flex flex-column">
                     <h2>Recent Expenses</h2>
-                    <!-- <div class="filter-controls mb-3">
-                      <input
-                        type="date"
-                        id="dateFilter"
-                        title="Filter by Date"
-                        class="form-control"
-                      />
-                      <input
-                        type="number"
-                        id="amountFilter"
-                        placeholder="Filter by Amount (MMK)"
-                        title="Filter by Amount"
-                        class="form-control"
-                      />
-                    </div> -->
                     <div id="expenseList" class="flex-grow-1">
                       <div
                         id="expenseTableContainer"
@@ -586,6 +571,7 @@
                               <th>Paid By</th>
                               <th>Date</th>
                               <th>Amount (MMK)</th>
+                              <th>Edit</th>
                               <th>Action</th>
                             </tr>
                           </thead>
@@ -637,6 +623,26 @@
               <div id="mapContainer" class="mt-4">
                 <h2 class="text-center">Expense Locations</h2>
                 <div id="mainMap"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Toast Container -->
+          <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div
+              id="toast"
+              class="toast align-items-center border-0"
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true"
+            >
+              <div class="d-flex">
+                <div class="toast-body text-title-color"></div>
+                <button
+                  type="button"
+                  class="btn-close btn-close-white me-2 m-auto"
+                  data-bs-dismiss="toast"
+                  aria-label="Close"
+                ></button>
               </div>
             </div>
           </div>

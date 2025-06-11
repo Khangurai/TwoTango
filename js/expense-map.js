@@ -2,20 +2,14 @@
 document.querySelectorAll("[data-target]").forEach((button) => {
   button.addEventListener("click", (e) => {
     e.preventDefault();
-
-    // Hide all contents
     document.querySelectorAll(".content-section").forEach((content) => {
       content.classList.add("d-none");
     });
-
-    // Show target content
-    const targetId = button.dataset.target; // or button.getAttribute('data-target')
+    const targetId = button.dataset.target;
     const contentToShow = document.getElementById(targetId);
     if (contentToShow) {
       contentToShow.classList.remove("d-none");
     }
-
-    // Update active state
     document.querySelectorAll(".nav__link").forEach((navLink) => {
       navLink.classList.remove("active-link");
     });
@@ -34,8 +28,10 @@ let currentFilter = "all";
 let currentMarker;
 let accuracyCircle;
 let expenseDataTable;
+let editingExpenseId = null;
+let currentInfoWindow = null;
 
-// Sample expenses (you can keep this or remove it based on your needs)
+// Sample expenses
 const sampleExpenses = [
   {
     id: "1749312657746",
@@ -62,7 +58,7 @@ const sampleExpenses = [
       name: "Junction City",
       address: "Corner of Bogyoke Aung San Road and Pyay Road, Yangon",
       lat: 16.781758,
-      lng: 96.159708,
+      lng: 96.127708,
     },
   },
   {
@@ -103,7 +99,7 @@ const sampleExpenses = [
     location: {
       name: "BBQ Park",
       address: "Yangon, Myanmar",
-      lat: 16.818494,
+      lat: 16.645494,
       lng: 96.155308,
     },
   },
@@ -137,7 +133,7 @@ const sampleExpenses = [
   },
   {
     id: "1749312657753",
-    amount: 18000,
+    amount: 28000,
     category: "Food & Dining",
     date: "2025-01-07",
     paidBy: "Partner 2",
@@ -207,7 +203,7 @@ const sampleExpenses = [
   },
   {
     id: "1749312657758",
-    amount: 22000,
+    amount: 28000,
     category: "Food & Dining",
     date: "2025-04-22",
     paidBy: "Partner 1",
@@ -323,30 +319,25 @@ const sampleExpenses = [
 function initMap() {
   const defaultLocation = { lat: 16.8409, lng: 96.1735 };
 
-  // Initialize main map
   mainMap = new google.maps.Map(document.getElementById("mainMap"), {
     center: defaultLocation,
     zoom: 12,
     gestureHandling: "greedy",
   });
 
-  // Initialize expense map
   expenseMap = new google.maps.Map(document.getElementById("expenseMap"), {
     center: defaultLocation,
     zoom: 12,
-    // gestureHandling: "none",
   });
 
   geocoder = new google.maps.Geocoder();
   const input = document.getElementById("autocomplete");
   autocomplete = new google.maps.places.Autocomplete(input);
 
-  // Clear input on click
   input.addEventListener("click", () => {
     input.value = "";
   });
 
-  // Location button for current position
   const locationButton = document.createElement("button");
   locationButton.className = "location-button";
   locationButton.title = "Show your location";
@@ -355,12 +346,9 @@ function initMap() {
       <path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/>
     </svg>
   `;
-  expenseMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
-    locationButton
-  );
+  expenseMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton);
   locationButton.addEventListener("click", getCurrentLocationForExpense);
 
-  // Autocomplete listener
   autocomplete.addListener("place_changed", () => {
     const place = autocomplete.getPlace();
     if (!place.geometry) {
@@ -389,7 +377,6 @@ function initMap() {
     ).textContent = `Selected: ${place.name}, ${place.formatted_address}`;
   });
 
-  // Clear location on input clear
   input.addEventListener("input", () => {
     if (input.value === "") {
       if (currentMarker) currentMarker.setMap(null);
@@ -401,25 +388,19 @@ function initMap() {
     }
   });
 
-  // Include location checkbox listener
-  document
-    .getElementById("includeLocation")
-    .addEventListener("change", function () {
-      document
-        .getElementById("locationSection")
-        .classList.toggle("d-none", !this.checked);
-      selectedLocation = null;
-      document.getElementById("locationInfo").classList.add("d-none");
-      document.getElementById("autocomplete").value = "";
-      if (currentMarker) currentMarker.setMap(null);
-      if (accuracyCircle) accuracyCircle.setMap(null);
-      currentMarker = null;
-      accuracyCircle = null;
-      expenseMap.setCenter(defaultLocation);
-      expenseMap.setZoom(12);
-    });
+  document.getElementById("includeLocation").addEventListener("change", function () {
+    document.getElementById("locationSection").classList.toggle("d-none", !this.checked);
+    selectedLocation = null;
+    document.getElementById("locationInfo").classList.add("d-none");
+    document.getElementById("autocomplete").value = "";
+    if (currentMarker) currentMarker.setMap(null);
+    if (accuracyCircle) accuracyCircle.setMap(null);
+    currentMarker = null;
+    accuracyCircle = null;
+    expenseMap.setCenter(defaultLocation);
+    expenseMap.setZoom(12);
+  });
 
-  // Date filter listener
   document.getElementById("dateFilter").addEventListener("change", function () {
     currentFilter = this.value;
     if (this.value === "custom") {
@@ -430,7 +411,6 @@ function initMap() {
     }
   });
 
-  // Set default dates
   const today = new Date();
   const oneWeekAgo = new Date();
   oneWeekAgo.setDate(today.getDate() - 7);
@@ -438,16 +418,14 @@ function initMap() {
   document.getElementById("endDate").valueAsDate = today;
   document.getElementById("date").valueAsDate = today;
 
-  // Load data after initialization
   loadData();
 }
 
-// Get current location for expense
 function getCurrentLocationForExpense() {
   const locationButton = document.querySelector(".location-button");
   const locationIcon = locationButton.querySelector(".location-icon");
   if (!navigator.geolocation) {
-    alert("Geolocation is not supported by this browser.");
+    showToast("Geolocation is not supported by this browser.");
     return;
   }
   locationIcon.classList.add("loading");
@@ -503,7 +481,7 @@ function getCurrentLocationForExpense() {
             "locationInfo"
           ).textContent = `Selected: ${selectedLocation.name}, ${selectedLocation.address}`;
         } else {
-          alert("Geocoder failed due to: " + status);
+          showToast("Geocoder failed due to: " + status);
         }
       });
       locationIcon.classList.remove("loading");
@@ -524,7 +502,7 @@ function getCurrentLocationForExpense() {
           errorMessage = "Location request timed out.";
           break;
       }
-      alert(errorMessage);
+      showToast(errorMessage);
       locationIcon.classList.remove("loading");
       locationIcon.innerHTML = `<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>`;
       locationIcon.style.fill = "#d93025";
@@ -538,76 +516,12 @@ function getCurrentLocationForExpense() {
   );
 }
 
-// Expense form submission
-document.getElementById("expenseForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  const amount = document.getElementById("amount").value;
-  const category = document.getElementById("category").value;
-  const date = document.getElementById("date").value;
-  const paidBy = document.getElementById("paidBy").value;
-  const notes = document.getElementById("notes").value;
-  const includeLocation = document.getElementById("includeLocation").checked;
-
-  if (!amount || !category || !date || !paidBy) {
-    alert("Please fill in all required fields");
-    return;
-  }
-
-  const expense = {
-    id: Date.now().toString(),
-    amount: parseFloat(amount),
-    category: category,
-    date: date,
-    paidBy: paidBy,
-    notes: notes,
-    location:
-      includeLocation && selectedLocation
-        ? selectedLocation
-        : {
-            name: "Unknown",
-            address: "No location provided",
-            lat: null,
-            lng: null,
-          },
-  };
-
-  saveExpense(expense);
-  loadData();
-  document.getElementById("expenseForm").reset();
-  document.getElementById("date").valueAsDate = new Date();
-  document.getElementById("includeLocation").checked = false;
-  document.getElementById("locationSection").classList.add("d-none");
-  document.getElementById("locationInfo").classList.add("d-none");
-  selectedLocation = null;
-  if (currentMarker) currentMarker.setMap(null);
-  if (accuracyCircle) accuracyCircle.setMap(null);
-  currentMarker = null;
-  accuracyCircle = null;
-  alert("Expense added successfully!");
-});
-
-// Cancel expense form
-document.getElementById("cancelExpense").addEventListener("click", () => {
-  document.getElementById("expenseForm").reset();
-  document.getElementById("date").valueAsDate = new Date();
-  document.getElementById("includeLocation").checked = false;
-  document.getElementById("locationSection").classList.add("d-none");
-  document.getElementById("locationInfo").classList.add("d-none");
-  selectedLocation = null;
-  if (currentMarker) currentMarker.setMap(null);
-  if (accuracyCircle) accuracyCircle.setMap(null);
-  currentMarker = null;
-  accuracyCircle = null;
-});
-
-// Load sample data
 function loadSampleData() {
   localStorage.setItem("expenses", JSON.stringify(sampleExpenses));
   loadData();
-  alert("Sample data loaded successfully!");
+  showToast("Sample data loaded successfully!");
 }
 
-// Load expenses from localStorage
 function loadData() {
   const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
   clearMarkers();
@@ -615,21 +529,17 @@ function loadData() {
   updateSummaryCard();
 }
 
-// Save expense to localStorage
 function saveExpense(expense) {
   let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
   expenses.push(expense);
   localStorage.setItem("expenses", JSON.stringify(expenses));
 }
 
-// Add marker to map
 function addMarker(expense) {
   if (!expense.location.lat || !expense.location.lng) return;
 
-  // Get category emoji
   const categoryEmoji = getCategoryEmoji(expense.category);
-  
-  // Create marker with only emoji as label
+
   const marker = new google.maps.Marker({
     position: { lat: expense.location.lat, lng: expense.location.lng },
     map: mainMap,
@@ -637,13 +547,12 @@ function addMarker(expense) {
     id: expense.id,
     label: {
       text: categoryEmoji,
-      fontSize: '16px',
-      color: '#000000' // Emoji color
+      fontSize: "16px",
+      color: "#000000",
     },
-    icon: null // Remove default red icon
+    icon: null,
   });
 
-  // Info window content with category emoji in the title
   const infoWindowContent = `
     <div style="
       font-family: 'Open Sans', sans-serif;
@@ -658,7 +567,7 @@ function addMarker(expense) {
         margin-bottom: 8px;
       ">${categoryEmoji} ${expense.location.name}</h3>
       <p style="margin-bottom: 4px;"><strong>Address:</strong> ${
-        expense.location.address || 'Not specified'
+        expense.location.address || "Not specified"
       }</p>
       <p style="margin-bottom: 4px;"><strong>Amount:</strong> <span style="
         color: var(--pink-500, #ec4899);
@@ -675,16 +584,11 @@ function addMarker(expense) {
           font-weight: 600;
         ">${expense.category}</span>
       </p>
-      <p style="margin-bottom: 4px;"><strong>Paid By:</strong> ${
-        expense.paidBy
-      }</p>
+      <p style="margin-bottom: 4px;"><strong>Paid By:</strong> ${expense.paidBy}</p>
       <p style="margin-bottom: 4px;"><strong>Notes:</strong> ${
-        expense.notes ||
-        '<span style="font-style: italic; color: #777;">No notes</span>'
+        expense.notes || '<span style="font-style: italic; color: #777;">No notes</span>'
       }</p>
-      <p style="margin-bottom: 0;"><strong>Date:</strong> ${new Date(
-        expense.date
-      ).toLocaleDateString()}</p>
+      <p style="margin-bottom: 0;"><strong>Date:</strong> ${new Date(expense.date).toLocaleDateString()}</p>
       <button
         onclick="deleteExpense('${expense.id}')"
         class="delete-btn"
@@ -718,28 +622,23 @@ function addMarker(expense) {
     infoWindow.open(mainMap, marker);
     currentInfoWindow = infoWindow;
   });
-  
+
   markers.push(marker);
 }
 
-// Helper function to get emoji for each category
 function getCategoryEmoji(category) {
   const emojiMap = {
-    'Food & Dining': '🍽️',
-    'Travel': '✈️',
-    'Entertainment': '🎮',
-    'Shopping': '🛍️',
-    'Utilities': '💡',
-    'Health': '🩺',
-    'Other': '🔖'
+    "Food & Dining": "🍽️",
+    Travel: "✈️",
+    Entertainment: "🎮",
+    Shopping: "🛍️",
+    Utilities: "💡",
+    Health: "🩺",
+    Other: "🔖",
   };
-  return emojiMap[category] || '📍'; // default marker if category not found
+  return emojiMap[category] || "📍";
 }
 
-// Global variable to track the currently open info window
-let currentInfoWindow = null;
-
-// Filter expenses based on date
 function filterExpenses(filterType) {
   clearMarkers();
   const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
@@ -821,25 +720,20 @@ function filterExpenses(filterType) {
   renderFilteredExpenseList(filteredExpenses);
 }
 
-// Apply custom date filter
 function applyCustomFilter() {
   filterExpenses("custom");
 }
 
-// Clear all markers
 function clearMarkers() {
   markers.forEach((marker) => marker.setMap(null));
   markers = [];
 }
 
-// Render filtered expense list
 function renderFilteredExpenseList(filteredExpenses) {
-  // Destroy existing DataTable instance if it exists
   if ($.fn.DataTable.isDataTable("#expenseTable")) {
     expenseDataTable.destroy();
   }
 
-  // Initialize DataTable again with responsive settings and custom rendering
   expenseDataTable = $("#expenseTable").DataTable({
     data: filteredExpenses,
     responsive: {
@@ -855,27 +749,24 @@ function renderFilteredExpenseList(filteredExpenses) {
         }),
       },
     },
-    order: [[4, "desc"]], // Default sort by date (column index 4)
+    order: [[4, "desc"]],
     columns: [
       {
         data: "location.name",
         defaultContent: "General Expense",
         render: function (data, type, row) {
-          const paidByColor = row.paidBy === "Partner 1" ? "blue" : "green"; // Using inline style for example, ideally move to CSS classes
+          const paidByColor = row.paidBy === "Partner 1" ? "blue" : "green";
           return `<span style="color: ${paidByColor};">${data}</span>`;
         },
-        // Visible on all screen sizes, for mobile it's the primary column
         className: "all",
       },
       {
         data: "notes",
         defaultContent: "",
-        // Hidden on mobile, shown on desktop
         className: "desktop",
       },
       {
         data: "category",
-        // Hidden on mobile, shown on desktop
         className: "desktop",
         render: function (data, type, row) {
           const paidByColor = row.paidBy === "Partner 1" ? "blue" : "green";
@@ -884,7 +775,6 @@ function renderFilteredExpenseList(filteredExpenses) {
       },
       {
         data: "paidBy",
-        // Visible on all screen sizes (priority 2, after location)
         className: "all",
       },
       {
@@ -892,7 +782,6 @@ function renderFilteredExpenseList(filteredExpenses) {
         render: function (data, type, row) {
           return new Date(data).toLocaleDateString("en-GB");
         },
-        // Visible on all screen sizes (priority 3)
         className: "all",
       },
       {
@@ -900,7 +789,6 @@ function renderFilteredExpenseList(filteredExpenses) {
         render: function (data, type, row) {
           return `${data.toLocaleString()} MMK`;
         },
-        // Visible on all screen sizes (priority 1)
         className: "all",
       },
       {
@@ -908,90 +796,69 @@ function renderFilteredExpenseList(filteredExpenses) {
         orderable: false,
         render: function (data, type, row) {
           return `
+            <button class="btn btn-outline-primary btn-sm edit-btn" onclick="editExpense('${row.id}')">
+              Edit
+            </button>
             <button class="btn btn-danger btn-sm delete-btn" onclick="deleteExpense('${row.id}')">
-                Delete
+              Delete
             </button>
           `;
         },
-        // Visible on all screen sizes
         className: "all",
       },
     ],
     columnDefs: [
       {
         orderable: false,
-        targets: [6], // Disable sorting for the "Action" column
+        targets: [6],
       },
     ],
     language: {
       emptyTable: "No expenses found.",
     },
-    // Add row click event for map functionality
     rowCallback: function (row, data) {
       $(row).on("click", function (e) {
         if (
-          !$(e.target).hasClass("delete-btn") &&
-          data.location?.lat &&
-          data.location?.lng
+          $(e.target).hasClass("edit-btn") ||
+          $(e.target).hasClass("delete-btn") ||
+          $(e.target).closest(".edit-btn").length ||
+          $(e.target).closest(".delete-btn").length
         ) {
-          // Assuming mainMap and bootstrap are globally available as in original code
-          if (
-            typeof mainMap !== "undefined" &&
-            typeof bootstrap !== "undefined"
-          ) {
+          return;
+        }
+        if (data.location?.lat && data.location?.lng) {
+          if (typeof mainMap !== "undefined" && typeof bootstrap !== "undefined") {
             mainMap.setCenter({
               lat: data.location.lat,
               lng: data.location.lng,
             });
             mainMap.setZoom(18);
-            const mapTab = new bootstrap.Tab(
-              document.getElementById("map-tab")
-            );
+            const mapTab = new bootstrap.Tab(document.getElementById("map-tab"));
             mapTab.show();
           } else {
-            console.warn(
-              "mainMap or bootstrap not defined. Cannot show location on map."
-            );
+            console.warn("mainMap or bootstrap not defined. Cannot show location on map.");
           }
         }
       });
     },
   });
 
-  // Apply filters based on input values for the DataTables
-  $("#dateFilterTable")
-    .off("change")
-    .on("change", function () {
-      const dateValue = this.value; // e.g., "YYYY-MM-DD"
-      expenseDataTable.column(4).search(dateValue).draw();
-    });
+  $("#dateFilterTable").off("change").on("change", function () {
+    const dateValue = this.value;
+    expenseDataTable.column(4).search(dateValue).draw();
+  });
 
-  $("#amountFilterTable")
-    .off("keyup change")
-    .on("keyup change", function () {
-      const amount = parseFloat(this.value);
-      if (!isNaN(amount)) {
-        // Custom filter for amount to match exactly or start with the entered value
-        // You might need a more complex custom filter for range or "greater than"
-        expenseDataTable.column(5).search(this.value.trim()).draw();
-      } else {
-        expenseDataTable.column(5).search("").draw(); // Clear filter if input is not a number
-      }
-    });
-
-  // Global search (if you want one for all columns)
-  // $('#myGlobalSearchInput').on('keyup', function() {
-  //     expenseDataTable.search(this.value).draw();
-  // });
+  $("#amountFilterTable").off("keyup change").on("keyup change", function () {
+    const amount = parseFloat(this.value);
+    if (!isNaN(amount)) {
+      expenseDataTable.column(5).search(this.value.trim()).draw();
+    } else {
+      expenseDataTable.column(5).search("").draw();
+    }
+  });
 }
 
 $(document).ready(function () {
-  // Initial call to renderFilteredExpenseList can be done here with initial data
-  // For now, let's assume an empty array or existing data will be passed
-  // Example: renderFilteredExpenseList(yourInitialExpensesArray);
-
-  // If you want to initialize DataTables immediately with no data and then add it later,
-  // you can call it without data initially and then use expenseDataTable.rows.add().draw()
   if (!$.fn.DataTable.isDataTable("#expenseTable")) {
     expenseDataTable = $("#expenseTable").DataTable({
       responsive: {
@@ -1007,7 +874,7 @@ $(document).ready(function () {
           }),
         },
       },
-      order: [[4, "desc"]], // Default sort by date (column index 4)
+      order: [[4, "desc"]],
       columns: [
         { data: "location.name", defaultContent: "General Expense" },
         { data: "notes", defaultContent: "" },
@@ -1015,31 +882,159 @@ $(document).ready(function () {
         { data: "paidBy" },
         { data: "date" },
         { data: "amount" },
-        { data: null, orderable: false }, // Action column
+        { data: null, orderable: false },
       ],
       columnDefs: [
-        { orderable: false, targets: [6] }, // Disable sorting for the "Action" column
-        // Hide these columns on small screens
-        { responsivePriority: 1, targets: [5] }, // Amount - visible always
-        { responsivePriority: 2, targets: [0] }, // Location - visible always
-        { responsivePriority: 3, targets: [3] }, // Paid By - visible always
-        { responsivePriority: 4, targets: [4] }, // Date - visible always
-        { responsivePriority: 5, targets: [6] }, // Action - visible always
-        { responsivePriority: 10001, targets: [1] }, // Notes - hide first
-        { responsivePriority: 10002, targets: [2] }, // Category - hide second
+        { orderable: false, targets: [6] },
+        { responsivePriority: 1, targets: [5] },
+        { responsivePriority: 2, targets: [0] },
+        { responsivePriority: 3, targets: [3] },
+        { responsivePriority: 4, targets: [4] },
+        { responsivePriority: 5, targets: [6] },
+        { responsivePriority: 10001, targets: [1] },
+        { responsivePriority: 10002, targets: [2] },
       ],
       language: {
-        emptyTable: "No expenses found.", // Custom message when no data is available
+        emptyTable: "No expenses found.",
       },
     });
   }
 });
-// Render expense list
+
 function renderExpenseList() {
   filterExpenses(currentFilter);
 }
 
-// Delete expense
+function editExpense(id) {
+  const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+  const expense = expenses.find((exp) => exp.id === id);
+  if (!expense) {
+    showToast("Expense not found!");
+    return;
+  }
+
+  editingExpenseId = id;
+
+  document.getElementById("amount").value = expense.amount;
+  document.getElementById("category").value = expense.category || "Other";
+  document.getElementById("date").value = expense.date;
+  document.getElementById("paidBy").value = expense.paidBy || "Partner 1";
+  document.getElementById("notes").value = expense.notes || "";
+  document.getElementById("includeLocation").checked = !!(
+    expense.location && expense.location.lat && expense.location.lng
+  );
+
+  if (expense.location && expense.location.lat && expense.location.lng) {
+    document.getElementById("locationSection").classList.remove("d-none");
+    document.getElementById("autocomplete").value = expense.location.name || "";
+    document.getElementById("locationInfo").classList.remove("d-none");
+    document.getElementById(
+      "locationInfo"
+    ).textContent = `Selected: ${expense.location.name}, ${expense.location.address}`;
+    selectedLocation = { ...expense.location };
+
+    expenseMap.setCenter({
+      lat: expense.location.lat,
+      lng: expense.location.lng,
+    });
+    expenseMap.setZoom(15);
+    if (currentMarker) currentMarker.setMap(null);
+    if (accuracyCircle) accuracyCircle.setMap(null);
+    currentMarker = new google.maps.Marker({
+      position: { lat: expense.location.lat, lng: expense.location.lng },
+      map: expenseMap,
+      title: expense.location.name,
+    });
+  } else {
+    document.getElementById("locationSection").classList.add("d-none");
+    document.getElementById("locationInfo").classList.add("d-none");
+    document.getElementById("autocomplete").value = "";
+    selectedLocation = null;
+    if (currentMarker) currentMarker.setMap(null);
+    if (accuracyCircle) accuracyCircle.setMap(null);
+    currentMarker = null;
+    accuracyCircle = null;
+  }
+
+  document.getElementById("expenseFormCard").querySelector(".card-title").textContent =
+    "Edit Expense";
+  document.getElementById("submitExpense").innerHTML =
+    '<i class="bi bi-save me-1"></i> Save Changes';
+}
+
+function updateExpense(id) {
+  let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+  const expenseIndex = expenses.findIndex((exp) => exp.id === id);
+  if (expenseIndex === -1) {
+    showToast("Expense not found!");
+    return;
+  }
+
+  const amount = document.getElementById("amount").value.trim();
+  const category = document.getElementById("category").value;
+  const date = document.getElementById("date").value;
+  const paidBy = document.getElementById("paidBy").value;
+  const notes = document.getElementById("notes").value;
+  const includeLocation = document.getElementById("includeLocation").checked;
+
+  if (!amount || !category || !date || !paidBy) {
+    showToast("Please fill in all required fields");
+    return;
+  }
+
+  const parsedAmount = parseFloat(amount);
+  if (isNaN(parsedAmount) || parsedAmount <= 0) {
+    showToast("Please enter a valid positive amount");
+    return;
+  }
+
+  const updatedExpense = {
+    id: id,
+    amount: parsedAmount,
+    category: category,
+    date: date,
+    paidBy: paidBy,
+    notes: notes,
+    location:
+      includeLocation && selectedLocation
+        ? selectedLocation
+        : {
+            name: "Unknown",
+            address: "No location provided",
+            lat: null,
+            lng: null,
+          },
+  };
+
+  expenses[expenseIndex] = updatedExpense;
+  localStorage.setItem("expenses", JSON.stringify(expenses));
+
+  resetForm();
+  loadData();
+  showToast("Expense updated successfully!");
+}
+
+function resetForm() {
+  document.getElementById("expenseForm").reset();
+  document.getElementById("date").valueAsDate = new Date();
+  document.getElementById("includeLocation").checked = false;
+  document.getElementById("locationSection").classList.add("d-none");
+  document.getElementById("locationInfo").classList.add("d-none");
+  document.getElementById("autocomplete").value = "";
+  selectedLocation = null;
+  if (currentMarker) currentMarker.setMap(null);
+  if (accuracyCircle) accuracyCircle.setMap(null);
+  currentMarker = null;
+  accuracyCircle = null;
+  expenseMap.setCenter({ lat: 16.8409, lng: 96.1735 });
+  expenseMap.setZoom(12);
+  editingExpenseId = null;
+  document.getElementById("expenseFormCard").querySelector(".card-title").textContent =
+    "Add New Expense";
+  document.getElementById("submitExpense").innerHTML =
+    '<i class="bi bi-plus me-1"></i> Add Transaction';
+}
+
 function deleteExpense(id) {
   if (confirm("Are you sure you want to delete this expense?")) {
     let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
@@ -1049,7 +1044,6 @@ function deleteExpense(id) {
   }
 }
 
-// Calculate distance between two points
 function calculateDistance(lat1, lon1, lat2, lon2) {
   const R = 6371;
   const dLat = ((lat2 - lat1) * Math.PI) / 180;
@@ -1064,7 +1058,6 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   return R * c;
 }
 
-// Update summary card
 function updateSummaryCard() {
   const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
   if (expenses.length === 0) {
@@ -1102,15 +1095,12 @@ function updateSummaryCard() {
     }
   }
   const avg = expenses.length > 0 ? total / expenses.length : 0;
-  document.getElementById("totalExpenses").textContent =
-    total.toFixed(0) + " MMK";
-  document.getElementById("totalDistance").textContent =
-    distance.toFixed(2) + " km";
+  document.getElementById("totalExpenses").textContent = total.toFixed(0) + " MMK";
+  document.getElementById("totalDistance").textContent = distance.toFixed(2) + " km";
   document.getElementById("totalLocations").textContent = locations.size;
   document.getElementById("avgExpense").textContent = avg.toFixed(0) + " MMK";
 }
 
-// Export last two months data
 function exportLastTwoMonthsData() {
   const expenses = JSON.parse(localStorage.getItem("expenses")) || [];
   const twoMonthsAgo = new Date();
@@ -1120,7 +1110,7 @@ function exportLastTwoMonthsData() {
     .sort((a, b) => new Date(b.date) - new Date(a.date));
   const exportData = filteredExpenses.slice(0, 20);
   if (exportData.length === 0) {
-    alert("No data found for the last 2 months");
+    showToast("No data found for the last 2 months");
     return;
   }
   let csv =
@@ -1137,7 +1127,7 @@ function exportLastTwoMonthsData() {
   const blob = new Blob([csv], { type: "text/csv" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  a.setURIComponent("hidden", "");
+  a.setAttribute("hidden", "");
   a.setAttribute("href", url);
   a.setAttribute("download", "expense_data_last_2_months.csv");
   document.body.appendChild(a);
@@ -1145,27 +1135,78 @@ function exportLastTwoMonthsData() {
   document.body.removeChild(a);
 }
 
-// Section Toggle Script
-document.querySelectorAll("[data-target]").forEach((button) => {
-  button.addEventListener("click", (e) => {
-    e.preventDefault();
-    document.querySelectorAll(".content-section").forEach((content) => {
-      content.classList.add("d-none");
-    });
-    const targetId = button.dataset.target;
-    const contentToShow = document.getElementById(targetId);
-    if (contentToShow) {
-      contentToShow.classList.remove("d-none");
-    }
-    document.querySelectorAll(".nav__link").forEach((navLink) => {
-      navLink.classList.remove("active-link");
-    });
-    button.classList.add("active-link");
-  });
+document.getElementById("expenseForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const amount = document.getElementById("amount").value.trim();
+  const category = document.getElementById("category").value;
+  const date = document.getElementById("date").value;
+  const paidBy = document.getElementById("paidBy").value;
+  const notes = document.getElementById("notes").value;
+  const includeLocation = document.getElementById("includeLocation").checked;
+
+  console.log("Form Values:", { amount, category, date, paidBy, notes, includeLocation, editingExpenseId });
+
+  if (!amount || !category || !date || !paidBy) {
+    showToast("Please fill in all required fields");
+    return;
+  }
+
+  const parsedAmount = parseFloat(amount);
+  if (isNaN(parsedAmount) || parsedAmount <= 0) {
+    showToast("Please enter a valid positive amount");
+    return;
+  }
+
+  if (editingExpenseId) {
+    updateExpense(editingExpenseId);
+  } else {
+    const expense = {
+      id: Date.now().toString(),
+      amount: parsedAmount,
+      category: category,
+      date: date,
+      paidBy: paidBy,
+      notes: notes,
+      location:
+        includeLocation && selectedLocation
+          ? selectedLocation
+          : {
+              name: "Unknown",
+              address: "No location provided",
+              lat: null,
+              lng: null,
+            },
+    };
+    saveExpense(expense);
+    loadData();
+    showToast("Expense added successfully!");
+  }
+
+  resetForm();
 });
 
-// // Initialize maps
-window.initMap = initMap;
+document.getElementById("cancelExpense").addEventListener("click", () => {
+  resetForm();
+});
 
-// Footer
-// document.getElementById("currentYear").textContent = new Date().getFullYear();
+function showToast(message, type = "success") {
+  const toastElement = document.getElementById("toast");
+  const toastBody = toastElement.querySelector(".toast-body");
+
+  // Set the message
+  toastBody.textContent = message;
+
+  // Apply type-specific styling
+  toastElement.classList.remove("success", "error");
+  toastElement.classList.add(type);
+
+  // Initialize and show the toast
+  const toast = new bootstrap.Toast(toastElement, {
+    autohide: true,
+    delay: 3000, // Auto-hide after 3 seconds
+  });
+  toast.show();
+}
+
+window.initMap = initMap;

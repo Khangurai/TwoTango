@@ -156,6 +156,10 @@
   box-shadow: none;
 }
 
+.edit-btn {
+  margin-right: 5px;
+}
+
 
 /* Small Buttons for Mobile */
 @media (max-width: 500px) {

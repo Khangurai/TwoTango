@@ -1,0 +1,47 @@
+/* Define Two-Tango color variables (matching original code) */
+:root {
+  --rose-600: #e11d48;
+  --pink-500: #ec4899;
+  --title-color: #1c1c1e;
+  --light-pink: #f7d6e0;
+}
+
+/* Toast container styling */
+.toast-container {
+  z-index: 1055; /* Ensure toasts appear above other elements */
+}
+
+/* Toast styling */
+.toast {
+  border-radius: 0.25rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  background-color: var(--light-pink); /* Light pink background for Two-Tango */
+}
+
+/* Success toast */
+.toast.success {
+  background-color: var(--pink-500);
+  color: white;
+}
+
+/* Error toast */
+.toast.error {
+  background-color: var(--rose-600);
+  color: white;
+}
+
+/* Ensure close button is visible on colored backgrounds */
+.toast.success .btn-close,
+.toast.error .btn-close {
+  filter: invert(1); /* White close button for contrast */
+}
+
+/* Toast body text */
+.toast-body.text-title-color {
+  color: var(--title-color);
+}
+
+.toast.success .toast-body.text-title-color,
+.toast.error .toast-body.text-title-color {
+  color: white; /* White text for colored toasts */
+}
