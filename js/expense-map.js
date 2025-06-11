@@ -943,7 +943,7 @@ function renderFilteredExpenseList(filteredExpenses) {
               lat: data.location.lat,
               lng: data.location.lng,
             });
-            mainMap.setZoom(15);
+            mainMap.setZoom(18);
             const mapTab = new bootstrap.Tab(
               document.getElementById("map-tab")
             );

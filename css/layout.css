@@ -135,3 +135,11 @@
     transform: rotate(360deg);
   }
 }
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  color: #6b7280;
+  font-size: 0.9rem;
+}

@@ -29,12 +29,17 @@
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="shortcut icon"
+      href="/images/favicon_io/favicon.ico"
+      type="image/x-icon"
+    />
   </head>
   <body>
     <!-- Sidebar -->
     <div class="sidebar">
-      <a class="sidebar-brand" href="index.html" >
+      <a class="sidebar-brand" href="index.html">
         <h2><span class="material-icons">favorite</span> TwoTango</h2>
       </a>
       <div class="sidebar-menu">
@@ -120,11 +125,7 @@
                 class="rounded-circle"
               />
             </a>
-            <div class="container justify-content-end">
-              <button id="logoutBtn" class="btn btn-outline-primary">
-                Logout
-              </button>
-            </div>
+
             <ul
               class="dropdown-menu dropdown-menu-end"
               aria-labelledby="dropdownUser"
@@ -155,6 +156,11 @@
                 >
               </li>
             </ul>
+          </div>
+          <div class="container justify-content-end">
+            <button id="logoutBtn" class="btn btn-outline-primary">
+              Logout
+            </button>
           </div>
         </div>
       </header>
@@ -211,7 +217,7 @@
 
         <!-- Charts Row -->
         <div class="row">
-          <div class="col-lg-8">
+          <div class="col-lg-6">
             <div class="card">
               <div class="card-header">
                 <h3>User Growth</h3>
@@ -238,7 +244,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-6">
             <div class="card">
               <div class="card-header">
                 <h3>User Types</h3>

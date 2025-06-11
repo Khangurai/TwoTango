@@ -95,9 +95,9 @@
 }
 
 /* Fixed Footer */
-.footer {
+/* .footer {
   position: fixed;
-  bottom: 70px; /* space for mobile nav */
+  bottom: 70px; 
   width: 100%;
   background: #f8f9fa;
   text-align: center;
@@ -106,10 +106,10 @@
   color: #666;
   z-index: 998;
   border-top: 1px solid #ddd;
-}
+} */
 
 /* Custom Footer */
-.custom-footer {
+/* .custom-footer {
   font-family: "Open Sans", Arial, sans-serif;
   color: #6c757d;
   position: fixed;
@@ -117,7 +117,7 @@
   bottom: 0;
   width: 100%;
   z-index: 1000;
-}
+} */
 
 .custom-footer .text-rose-600 {
   color: var(--rose-600) !important;
